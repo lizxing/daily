@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Daily</string>
+    <string name="science">Science</string>
+    <string name="weather">Weather</string>
+    <string name="news">News</string>
+    <string name="books">Books</string>
+    <string name="settings">Setting</string>
+    <string name="about">About</string>
+    <string name="daily">每日</string>
+    <string name="forecast">预报</string>
+    <string name="airquality">空气质量</string>
+    <string name="aqi">AQI指数</string>
+    <string name="pm25">PM2.5指数</string>
+    <string name="suggestion">生活建议</string>
+</resources>
