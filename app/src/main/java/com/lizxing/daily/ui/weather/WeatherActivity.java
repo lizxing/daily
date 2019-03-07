@@ -10,6 +10,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -18,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 import com.lizxing.daily.R;
 import com.lizxing.daily.gson.Forecast;
@@ -37,8 +39,8 @@ public class WeatherActivity extends AppCompatActivity {
     public SwipeRefreshLayout swipeRefresh;
     private ScrollView weatherLayout;
     private Button backButton;
-    private TextView titleCity;
-    private TextView titleUpdateTime;
+    private TextView weatherCity;
+    private TextView weatherUpdateTime;
     private TextView degreeText;
     private TextView weatherInfoText;
     private LinearLayout forecastLayout;
@@ -49,22 +51,29 @@ public class WeatherActivity extends AppCompatActivity {
     private TextView sportText;
     private ImageView bingPicImg;
     private String mWeatherId;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (Build.VERSION.SDK_INT >= 21) {
-            View decorView = getWindow().getDecorView();
-            decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-            getWindow().setStatusBarColor(Color.TRANSPARENT);
-        }
+//        状态栏与背景融合
+//        if (Build.VERSION.SDK_INT >= 21) {
+//            View decorView = getWindow().getDecorView();
+//            decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+//                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+//            getWindow().setStatusBarColor(Color.TRANSPARENT);
+//        }
         setContentView(R.layout.activity_weather);
-        // 初始化各控件
-        bingPicImg = (ImageView) findViewById(R.id.bing_pic_img);
-        weatherLayout = (ScrollView) findViewById(R.id.weather_layout);
-        titleCity = (TextView) findViewById(R.id.title_city);
-        titleUpdateTime = (TextView) findViewById(R.id.title_update_time);
+
+        initView();
+        initData();
+    }
+
+    private void initView(){
+//        bingPicImg = (ImageView) findViewById(R.id.bing_pic_img);
+//        weatherLayout = (ScrollView) findViewById(R.id.weather_layout);
+        weatherCity = (TextView) findViewById(R.id.weather_city);
+        weatherUpdateTime = (TextView) findViewById(R.id.weather_update_time);
         degreeText = (TextView) findViewById(R.id.degree_text);
         weatherInfoText = (TextView) findViewById(R.id.weather_info_text);
         forecastLayout = (LinearLayout) findViewById(R.id.forecast_layout);
@@ -75,8 +84,12 @@ public class WeatherActivity extends AppCompatActivity {
         sportText = (TextView) findViewById(R.id.sport_text);
         swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
         swipeRefresh.setColorSchemeResources(R.color.colorPrimary);
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        backButton = (Button) findViewById(R.id.button_back);
+        //drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        //backButton = (Button) findViewById(R.id.button_back);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+    }
+    private void initData(){
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String weatherString = prefs.getString("weather", null);
         if (weatherString != null) {
@@ -87,7 +100,7 @@ public class WeatherActivity extends AppCompatActivity {
         } else {
             // 无缓存时去服务器查询天气
             mWeatherId = getIntent().getStringExtra("weather_id");
-            weatherLayout.setVisibility(View.INVISIBLE);
+//            weatherLayout.setVisibility(View.INVISIBLE);
             requestWeather(mWeatherId);
         }
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -96,14 +109,24 @@ public class WeatherActivity extends AppCompatActivity {
                 requestWeather(mWeatherId);
             }
         });
-        backButton.setOnClickListener(new View.OnClickListener() {
+//        backButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(WeatherActivity.this,MainActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+        String bingPic = prefs.getString("bing_pic", null);
+
+        toolbar.setTitle(getResources().getString(R.string.weather2));
+        toolbar.setTitleTextColor(Color.WHITE);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(WeatherActivity.this,MainActivity.class);
                 startActivity(intent);
             }
         });
-        String bingPic = prefs.getString("bing_pic", null);
     }
 
     /**
@@ -155,8 +178,8 @@ public class WeatherActivity extends AppCompatActivity {
         String updateTime = weather.basic.update.updateTime.split(" ")[1];
         String degree = weather.now.temperature + "℃";
         String weatherInfo = weather.now.more.info;
-        titleCity.setText(cityName);
-        titleUpdateTime.setText(updateTime);
+        weatherCity.setText(cityName);
+        weatherUpdateTime.setText(getResources().getString(R.string.update_time)+updateTime);
         degreeText.setText(degree);
         weatherInfoText.setText(weatherInfo);
         forecastLayout.removeAllViews();
@@ -182,6 +205,6 @@ public class WeatherActivity extends AppCompatActivity {
         comfortText.setText(comfort);
         carWashText.setText(carWash);
         sportText.setText(sport);
-        weatherLayout.setVisibility(View.VISIBLE);
+//        weatherLayout.setVisibility(View.VISIBLE);
     }
 }

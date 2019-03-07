@@ -2,11 +2,16 @@
     <string name="app_name">Daily</string>
     <string name="science">Science</string>
     <string name="weather">Weather</string>
+    <string name="weather2">天气</string>
     <string name="news">News</string>
     <string name="books">Books</string>
     <string name="settings">Setting</string>
     <string name="about">About</string>
     <string name="daily">每日</string>
+    <string name="city">城市</string>
+    <string name="weather_info">天气信息</string>
+    <string name="update_time">更新时间</string>
+    <string name="degree">温度</string>
     <string name="forecast">预报</string>
     <string name="airquality">空气质量</string>
     <string name="aqi">AQI指数</string>

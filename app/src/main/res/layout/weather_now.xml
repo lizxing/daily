@@ -3,22 +3,39 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="15dp"
-    android:orientation="vertical">
+    android:background="#8000"
+    android:orientation="vertical"
+    android:gravity="center">
 
     <TextView
-        android:id="@+id/degree_text"
+        android:id="@+id/weather_update_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end"
+        android:layout_gravity="right"
         android:textColor="#fff"
-        android:textSize="60sp" />
-
+        android:textSize="15sp" />
+    <TextView
+        android:id="@+id/weather_city"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/daily"
+        android:textColor="#fff"
+        android:textSize="40sp" />
     <TextView
         android:id="@+id/weather_info_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end"
+        android:layout_marginTop="5dp"
+        android:text="@string/weather_info"
         android:textColor="#fff"
         android:textSize="20sp" />
+    <TextView
+        android:id="@+id/degree_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/degree"
+        android:textColor="#fff"
+        android:textSize="50sp" />
 
 </LinearLayout>
