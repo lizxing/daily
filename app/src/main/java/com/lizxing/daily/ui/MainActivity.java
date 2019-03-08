@@ -22,7 +22,6 @@ import com.lizxing.daily.ui.weather.WeatherActivity;
 public class MainActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
-    private Menu menu;
     private DrawerLayout mDrawerLayout;
 
     @Override
@@ -46,30 +45,6 @@ public class MainActivity extends AppCompatActivity {
 
         NavigationView navView = (NavigationView) findViewById(R.id.nav_view);
         navView.setNavigationItemSelectedListener(OnClickNavItem);
-    }
-
-    /**
-     * 处理点击菜单栏按钮
-     */
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        this.menu = menu;
-        getMenuInflater().inflate(R.menu.toolbar, menu);
-        return true;
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case android.R.id.home:
-                mDrawerLayout.openDrawer(GravityCompat.START);
-                break;
-            case R.id.menu_science:
-                Toast.makeText(this, "you click science", Toast.LENGTH_SHORT).show();
-                break;
-            default:
-                break;
-        }
-        return true;
     }
 
 
