@@ -71,23 +71,23 @@ public class WeatherActivity extends AppCompatActivity {
     }
 
     private void initView(){
-        bingPicImg = (ImageView) findViewById(R.id.bing_pic_img);
-//        weatherLayout = (ScrollView) findViewById(R.id.weather_layout);
-        weatherCity = (TextView) findViewById(R.id.weather_city);
-        weatherUpdateTime = (TextView) findViewById(R.id.weather_update_time);
-        degreeText = (TextView) findViewById(R.id.degree_text);
-        weatherInfoText = (TextView) findViewById(R.id.weather_info_text);
-        forecastLayout = (LinearLayout) findViewById(R.id.forecast_layout);
-        aqiText = (TextView) findViewById(R.id.aqi_text);
-        pm25Text = (TextView) findViewById(R.id.pm25_text);
-        comfortText = (TextView) findViewById(R.id.comfort_text);
-        carWashText = (TextView) findViewById(R.id.car_wash_text);
-        sportText = (TextView) findViewById(R.id.sport_text);
-        swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
+        bingPicImg = findViewById(R.id.bing_pic_img);
+//        weatherLayout = findViewById(R.id.weather_layout);
+        weatherCity = findViewById(R.id.weather_city);
+        weatherUpdateTime = findViewById(R.id.weather_update_time);
+        degreeText = findViewById(R.id.degree_text);
+        weatherInfoText = findViewById(R.id.weather_info_text);
+        forecastLayout = findViewById(R.id.forecast_layout);
+        aqiText = findViewById(R.id.aqi_text);
+        pm25Text = findViewById(R.id.pm25_text);
+        comfortText = findViewById(R.id.comfort_text);
+        carWashText = findViewById(R.id.car_wash_text);
+        sportText = findViewById(R.id.sport_text);
+        swipeRefresh = findViewById(R.id.swipe_refresh);
         swipeRefresh.setColorSchemeResources(R.color.colorPrimary);
-        //drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        //backButton = (Button) findViewById(R.id.button_back);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //drawerLayout = findViewById(R.id.drawer_layout);
+        //backButton = findViewById(R.id.button_back);
+        toolbar = findViewById(R.id.toolbar);
 
     }
     private void initData(){
@@ -192,10 +192,10 @@ public class WeatherActivity extends AppCompatActivity {
         forecastLayout.removeAllViews();
         for (Forecast forecast : weather.forecastList) {
             View view = LayoutInflater.from(this).inflate(R.layout.weather_forecast_item, forecastLayout, false);
-            TextView dateText = (TextView) view.findViewById(R.id.date_text);
-            TextView infoText = (TextView) view.findViewById(R.id.info_text);
-            TextView maxText = (TextView) view.findViewById(R.id.max_text);
-            TextView minText = (TextView) view.findViewById(R.id.min_text);
+            TextView dateText = view.findViewById(R.id.date_text);
+            TextView infoText = view.findViewById(R.id.info_text);
+            TextView maxText = view.findViewById(R.id.max_text);
+            TextView minText = view.findViewById(R.id.min_text);
             dateText.setText(forecast.date);
             infoText.setText(forecast.more.info);
             maxText.setText(forecast.temperature.max);
