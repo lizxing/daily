@@ -14,7 +14,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.lizxing.daily.R;
-import com.lizxing.daily.adapter.ViewPageAdapter;
+import com.lizxing.daily.common.ViewPageAdapter;
+import com.lizxing.daily.ui.news.NewsViewPageAdapter;
 import com.lizxing.daily.ui.weather.WeatherActivity;
 
 
@@ -22,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private DrawerLayout mDrawerLayout;
-    private ViewPageAdapter viewPageAdapter;
+    private NewsViewPageAdapter newsViewPageAdapter;
     private TabLayout tabLayout;
     private ViewPager viewPager;
 
@@ -48,10 +49,10 @@ public class MainActivity extends AppCompatActivity {
         NavigationView navView = findViewById(R.id.nav_view);
         navView.setNavigationItemSelectedListener(OnClickNavItem);
 
-        viewPageAdapter = new ViewPageAdapter(getSupportFragmentManager());
+        newsViewPageAdapter = new NewsViewPageAdapter(getSupportFragmentManager());
         tabLayout = findViewById(R.id.tabs);
         viewPager = findViewById(R.id.viewpager);
-        viewPager.setAdapter(viewPageAdapter);
+        viewPager.setAdapter(newsViewPageAdapter);
         tabLayout.setupWithViewPager(viewPager);
     }
 

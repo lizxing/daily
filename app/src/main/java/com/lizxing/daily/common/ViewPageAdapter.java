@@ -1,37 +1,33 @@
-package com.lizxing.daily.adapter;
+package com.lizxing.daily.common;
 
-import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.telecom.Call;
-
-import com.lizxing.daily.ui.news.PageFragment;
-
-import java.net.ContentHandler;
 
 public class ViewPageAdapter extends FragmentPagerAdapter {
 
-    private static  final String[] Tabs = {"tab1", "tab2", "tab3", "tab4", "tab5", "tab6", "tab7"};
+    protected String[] Tabs = {};
 
     public ViewPageAdapter(FragmentManager fm) {
         super(fm);
     }
 
+    protected void setTabs(String[] tabs){
+        this.Tabs = tabs;
+    }
+
     @Override
     public Fragment getItem(int i) {
-        return PageFragment.newInstance(i + 1); //创建fragment
+        return null;
     }
-
     @Override
     public int getCount() {
-        return Tabs.length;
+        return 0;
     }
-
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        return Tabs[position];
-    } //设置tabs
+        return super.getPageTitle(position);
+    }
 }
