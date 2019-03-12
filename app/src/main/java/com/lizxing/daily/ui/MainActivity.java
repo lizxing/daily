@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationView navView = findViewById(R.id.nav_view);
         navView.setNavigationItemSelectedListener(OnClickNavItem);
 
+        //新闻相关
         newsViewPageAdapter = new NewsViewPageAdapter(getSupportFragmentManager());
         tabLayout = findViewById(R.id.tabs);
         viewPager = findViewById(R.id.viewpager);
