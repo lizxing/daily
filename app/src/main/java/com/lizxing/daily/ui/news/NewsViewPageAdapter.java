@@ -19,7 +19,7 @@ public class NewsViewPageAdapter extends ViewPageAdapter {
      */
     @Override
     public Fragment getItem(int i) {
-        return PageFragment.newInstance(i + 1); //谷歌推荐的实例化fragment方法
+        return NewsPageFragment.newInstance(i + 1); //谷歌推荐的实例化fragment方法
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.lizxing.daily.utils;
 
 import com.google.gson.Gson;
+import com.lizxing.daily.gson.NewsList;
 import com.lizxing.daily.gson.Weather;
 
 import org.json.JSONArray;
@@ -21,6 +22,15 @@ public class Utility {
             e.printStackTrace();
         }
         return null;
+    }
+
+    /**
+     * 新闻相关
+     * 将返回的JSON解析
+     */
+    public static NewsList parseJsonWithGson(final String requestText){
+        Gson gson = new Gson();
+        return gson.fromJson(requestText, NewsList.class);
     }
 
 }
