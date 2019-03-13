@@ -1,5 +1,6 @@
 package com.lizxing.daily.ui.news;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -7,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.lizxing.daily.R;
 import com.lizxing.daily.common.DailyFragment;
@@ -95,65 +97,62 @@ public class NewsPageFragment extends DailyFragment {
         recyclerView = view.findViewById(R.id.recyclerView_news);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
-        newsItemAdapter = new NewsItemAdapter(itemList);
-        recyclerView.setAdapter(newsItemAdapter);
+//        newsItemAdapter = new NewsItemAdapter(itemList);
+//        recyclerView.setAdapter(newsItemAdapter);
     }
 
     private void requestNews(){
 //        Item item = new Item("1","2","3","4");
 //        itemList.add(item);
         String newsAddress = getAddress(mPage);
-//        HttpUtil.sendOkHttpRequest(newsAddress, new Callback() {
-//
-//            @Override
-//            public void onResponse(Call call, Response response) throws IOException {
-//                final String responseText = response.body().string();
-//                final NewsList newlist = Utility.parseJsonWithGson(responseText);
-//                final int code = newlist.code;
-//                final String msg = newlist.msg;
-//                if (code == 200){
-//                    itemList.clear();
-//                    for (News news:newlist.newsList){
-//                        Item item = new Item(news.title,news.description,news.picUrl, news.url);
-//                        itemList.add(item);
-//                    }
-//
-//                    MainActivity.this.runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            adapter.notifyDataSetChanged();
-//                            listView.setSelection(0);
-//                            refreshLayout.setRefreshing(false);
-//                        };
-//                    });
-//                }else{
-//                    MainActivity.this.runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            Toast.makeText(MainActivity.this, "数据错误返回",Toast.LENGTH_SHORT).show();
-//                            refreshLayout.setRefreshing(false);
-//                        }
-//                    });
-//                }
-//
-//
-//
-//            }
-//            @Override
-//            public void onFailure(Call call, IOException e) {
-//                e.printStackTrace();
-//                runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        Toast.makeText(MainActivity.this, "新闻加载失败", Toast.LENGTH_SHORT).show();
-//                    }
-//                });
-//            }
-//        });
+        HttpUtil.sendOkHttpRequest(newsAddress, new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String responseText = response.body().string();
+                final NewsList newlist = Utility.handleNewsResponse(responseText);
+                final int code = newlist.code;
+                final String msg = newlist.msg;
+                if (code == 200){
+                    itemList.clear();
+                    for (News news:newlist.newsList){
+                        Item item = new Item(news.title,news.description,news.picUrl, news.url);
+                        itemList.add(item);
+                    }
+
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            newsItemAdapter = new NewsItemAdapter(itemList);
+                            recyclerView.setAdapter(newsItemAdapter);
+                        };
+                    });
+                }else{
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getActivity().getApplicationContext(), "返回数据错误",Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+
+
+
+            }
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getActivity().getApplicationContext(), "新闻请求响应失败", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
     }
 
     private String getAddress(int mPage){
-        String address = "http://api.tianapi.com/world/?key=339a8b166f397f008236e596616a5f54&num=50&rand=1";
+        String address = "http://api.tianapi.com/world/?key=6634dbe82d9bddbf27123652cff14e0b";
         switch(mPage){
             case NEWS_WORLD:
                 break;

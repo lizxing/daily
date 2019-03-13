@@ -28,9 +28,8 @@ public class Utility {
      * 新闻相关
      * 将返回的JSON解析
      */
-    public static NewsList parseJsonWithGson(final String requestText){
-        Gson gson = new Gson();
-        return gson.fromJson(requestText, NewsList.class);
+    public static NewsList handleNewsResponse(final String requestText){
+        return new Gson().fromJson(requestText, NewsList.class);
     }
 
 }
