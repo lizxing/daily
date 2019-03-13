@@ -3,6 +3,7 @@ package com.lizxing.daily.ui.news;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,17 +11,44 @@ import android.view.ViewGroup;
 import com.lizxing.daily.R;
 import com.lizxing.daily.common.DailyFragment;
 import com.lizxing.daily.common.Item;
+import com.lizxing.daily.gson.News;
+import com.lizxing.daily.gson.NewsList;
+import com.lizxing.daily.ui.MainActivity;
+import com.lizxing.daily.utils.HttpUtil;
+import com.lizxing.daily.utils.Utility;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class NewsPageFragment extends DailyFragment {
 
+    private static final int NEWS_WORLD = 1; //国际
+    private static final int NEWS_HOME = 2; //国内
+    private static final int NEWS_SOCIAL = 3; //社会
+    private static final int NEWS_AI = 4; //人工智能
+    private static final int NEWS_IT = 5; //IT资讯
+    private static final int NEWS_VR = 6; //VR科技
+    private static final int NEWS_MOBILE = 7; //移动
+    private static final int NEWS_ANECDOTE = 8; //奇闻
+    private static final int NEWS_HEALTH = 9; //健康
+    private static final int NEWS_TRAVEL = 10; //旅游
+    private static final int NEWS_SPORT = 11; //体育
+
+
+    private static final String TAG = "NewsPageFragment";
     public static final String PAGE = "PAGE";
     private int mPage;
     private RecyclerView recyclerView;
     private NewsItemAdapter newsItemAdapter;
     private List<Item> itemList = new ArrayList<Item>();
+    private List<Integer> requestedList = new ArrayList<>();
+
 
     public static NewsPageFragment newInstance(int page) {
         NewsPageFragment pagefragment = new NewsPageFragment();
@@ -43,18 +71,124 @@ public class NewsPageFragment extends DailyFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_page_news, container, false);
 
-        if(itemList !=null){
-            itemList.clear();
+        initData();
+        initView(view);
+        
+        return view;
+    }
+    
+    private void initData(){
+        if(requestedList.indexOf(mPage) != -1){
+            //若本页已请求过数据，返回
+            return;
         }
-        Item item = new Item("1","2","3","4");
-        itemList.add(item);
+        if(mPage == 1){
+            Log.d(TAG, "initData: 请求数据,页面："+mPage);
+            requestNews();
+            if(requestedList.indexOf(mPage) == -1) {
+                requestedList.add(mPage);  //本页加入已请求列表
+            }
+        }
+    }
+    
+    private void initView(View view){
         recyclerView = view.findViewById(R.id.recyclerView_news);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
         newsItemAdapter = new NewsItemAdapter(itemList);
         recyclerView.setAdapter(newsItemAdapter);
-
-        return view;
     }
 
+    private void requestNews(){
+//        Item item = new Item("1","2","3","4");
+//        itemList.add(item);
+        String newsAddress = getAddress(mPage);
+//        HttpUtil.sendOkHttpRequest(newsAddress, new Callback() {
+//
+//            @Override
+//            public void onResponse(Call call, Response response) throws IOException {
+//                final String responseText = response.body().string();
+//                final NewsList newlist = Utility.parseJsonWithGson(responseText);
+//                final int code = newlist.code;
+//                final String msg = newlist.msg;
+//                if (code == 200){
+//                    itemList.clear();
+//                    for (News news:newlist.newsList){
+//                        Item item = new Item(news.title,news.description,news.picUrl, news.url);
+//                        itemList.add(item);
+//                    }
+//
+//                    MainActivity.this.runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            adapter.notifyDataSetChanged();
+//                            listView.setSelection(0);
+//                            refreshLayout.setRefreshing(false);
+//                        };
+//                    });
+//                }else{
+//                    MainActivity.this.runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            Toast.makeText(MainActivity.this, "数据错误返回",Toast.LENGTH_SHORT).show();
+//                            refreshLayout.setRefreshing(false);
+//                        }
+//                    });
+//                }
+//
+//
+//
+//            }
+//            @Override
+//            public void onFailure(Call call, IOException e) {
+//                e.printStackTrace();
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        Toast.makeText(MainActivity.this, "新闻加载失败", Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//            }
+//        });
+    }
+
+    private String getAddress(int mPage){
+        String address = "http://api.tianapi.com/world/?key=339a8b166f397f008236e596616a5f54&num=50&rand=1";
+        switch(mPage){
+            case NEWS_WORLD:
+                break;
+            case NEWS_HOME:
+                address = address.replace("world","guonei");
+                break;
+            case NEWS_SOCIAL:
+                address = address.replace("world","social");
+                break;
+            case NEWS_AI:
+                address = address.replace("world","ai");
+                break;
+            case NEWS_IT:
+                address = address.replace("world","it");
+                break;
+            case NEWS_VR:
+                address = address.replace("world","vr");
+                break;
+            case NEWS_MOBILE:
+                address = address.replace("world","mobile");
+                break;
+            case NEWS_ANECDOTE:
+                address = address.replace("world","qiwen");
+                break;
+            case NEWS_HEALTH:
+                address = address.replace("world","health");
+                break;
+            case NEWS_TRAVEL:
+                address = address.replace("world","travel");
+                break;
+            case NEWS_SPORT:
+                address = address.replace("world","tiyu");
+                break;
+            default:
+        }
+        return address;
+    }
 }
