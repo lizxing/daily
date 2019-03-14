@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         tabLayout = findViewById(R.id.tabs);
         viewPager = findViewById(R.id.viewpager);
         viewPager.setAdapter(newsViewPageAdapter);
+        viewPager.setOffscreenPageLimit(3);//懒加载
         tabLayout.setupWithViewPager(viewPager);
     }
 

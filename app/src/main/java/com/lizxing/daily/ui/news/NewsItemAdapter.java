@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.lizxing.daily.R;
 import com.lizxing.daily.common.Item;
 
@@ -43,7 +44,7 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Item item = mItemList.get(position);
-        //Glide.with(getContext()).load(item.getImageUrl()).into(holder.ItemPic);
+//        Glide.with(this).load(item.getImageUrl()).into(holder.ItemPic);
         holder.ItemText.setText(item.getTitle());
         holder.ItemDescr.setText(item.getDescr());
     }

@@ -49,7 +49,6 @@ public class NewsPageFragment extends DailyFragment {
     private RecyclerView recyclerView;
     private NewsItemAdapter newsItemAdapter;
     private List<Item> itemList = new ArrayList<Item>();
-    private List<Integer> requestedList = new ArrayList<>();
 
 
     public static NewsPageFragment newInstance(int page) {
@@ -80,16 +79,9 @@ public class NewsPageFragment extends DailyFragment {
     }
     
     private void initData(){
-        if(requestedList.indexOf(mPage) != -1){
-            //若本页已请求过数据，返回
-            return;
-        }
         if(mPage == 1){
             Log.d(TAG, "initData: 请求数据,页面："+mPage);
             requestNews();
-            if(requestedList.indexOf(mPage) == -1) {
-                requestedList.add(mPage);  //本页加入已请求列表
-            }
         }
     }
     
@@ -189,5 +181,11 @@ public class NewsPageFragment extends DailyFragment {
             default:
         }
         return address;
+    }
+
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
     }
 }
