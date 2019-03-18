@@ -1,5 +1,6 @@
 package com.lizxing.daily.ui.news;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import java.util.List;
 public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHolder> {
 
     private List<Item> mItemList;
+    private Context mContext;
 
     static class ViewHolder extends RecyclerView.ViewHolder{
         TextView ItemText;
@@ -29,8 +31,9 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
             ItemDescr = view.findViewById(R.id.descr_text);
         }
     }
-    public NewsItemAdapter(List<Item> itemList){
+    public NewsItemAdapter(List<Item> itemList, Context context){
         mItemList = itemList;
+        mContext = context;
     }
 
     @Override
@@ -44,7 +47,7 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Item item = mItemList.get(position);
-//        Glide.with(this).load(item.getImageUrl()).into(holder.ItemPic);
+        Glide.with(mContext).load(item.getImageUrl()).into(holder.ItemPic);
         holder.ItemText.setText(item.getTitle());
         holder.ItemDescr.setText(item.getDescr());
     }

@@ -49,12 +49,12 @@ public class MainActivity extends AppCompatActivity {
         NavigationView navView = findViewById(R.id.nav_view);
         navView.setNavigationItemSelectedListener(OnClickNavItem);
 
-        //新闻相关
+        //加载新闻相关
         newsViewPageAdapter = new NewsViewPageAdapter(getSupportFragmentManager());
         tabLayout = findViewById(R.id.tabs);
         viewPager = findViewById(R.id.viewpager);
         viewPager.setAdapter(newsViewPageAdapter);
-        viewPager.setOffscreenPageLimit(3);//懒加载
+        viewPager.setOffscreenPageLimit(3);//懒加载左右各3页
         tabLayout.setupWithViewPager(viewPager);
     }
 

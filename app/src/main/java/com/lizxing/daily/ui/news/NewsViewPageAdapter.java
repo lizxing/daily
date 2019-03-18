@@ -9,10 +9,9 @@ public class NewsViewPageAdapter extends ViewPageAdapter {
 
     public NewsViewPageAdapter(FragmentManager fm) {
         super(fm);
-        String[] Tabs = {"tab1", "tab2", "tab3", "tab4", "tab5", "tab6", "tab7"};
+        String[] Tabs = {"国际", "国内", "社会", "人工智能", "IT资讯", "VR科技", "移动互联", "奇闻", "健康", "旅游", "体育"};
         setTabs(Tabs);
     }
-
 
     /**
      * 创建fragment

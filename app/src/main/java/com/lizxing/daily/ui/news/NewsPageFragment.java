@@ -2,6 +2,7 @@ package com.lizxing.daily.ui.news;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 import com.lizxing.daily.R;
 import com.lizxing.daily.common.DailyFragment;
 import com.lizxing.daily.common.Item;
+import com.lizxing.daily.common.RecycleViewDivider;
 import com.lizxing.daily.gson.News;
 import com.lizxing.daily.gson.NewsList;
 import com.lizxing.daily.ui.MainActivity;
@@ -79,23 +81,21 @@ public class NewsPageFragment extends DailyFragment {
     }
     
     private void initData(){
-        if(mPage == 1){
-            Log.d(TAG, "initData: 请求数据,页面："+mPage);
-            requestNews();
-        }
+        Log.d(TAG, "initData: 请求数据,页面："+mPage);
+        requestNews();
     }
     
     private void initView(View view){
         recyclerView = view.findViewById(R.id.recyclerView_news);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
-//        newsItemAdapter = new NewsItemAdapter(itemList);
-//        recyclerView.setAdapter(newsItemAdapter);
+        recyclerView.addItemDecoration(new RecycleViewDivider(getContext(), LinearLayoutManager.VERTICAL, 10, getResources().getColor(R.color.Gainsboro)));
     }
 
+    /**
+     * 发起请求
+     */
     private void requestNews(){
-//        Item item = new Item("1","2","3","4");
-//        itemList.add(item);
         String newsAddress = getAddress(mPage);
         HttpUtil.sendOkHttpRequest(newsAddress, new Callback() {
             @Override
@@ -114,7 +114,8 @@ public class NewsPageFragment extends DailyFragment {
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            newsItemAdapter = new NewsItemAdapter(itemList);
+                            //更新UI
+                            newsItemAdapter = new NewsItemAdapter(itemList, getContext());
                             recyclerView.setAdapter(newsItemAdapter);
                         };
                     });
@@ -143,6 +144,9 @@ public class NewsPageFragment extends DailyFragment {
         });
     }
 
+    /**
+     * 获取请求地址
+     */
     private String getAddress(int mPage){
         String address = "http://api.tianapi.com/world/?key=6634dbe82d9bddbf27123652cff14e0b";
         switch(mPage){
