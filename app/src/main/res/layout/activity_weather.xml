@@ -21,7 +21,7 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="50dp"
         android:background="#8000"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
@@ -29,13 +29,22 @@
         app:navigationIcon="@mipmap/ic_back"
         app:title="@string/daily"/>
 
+    <TextView
+        android:id="@+id/weather_city"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:text="@string/daily"
+        android:textColor="#fff"
+        android:textSize="40sp"
+        android:gravity="center"
+        android:layout_marginTop="50dp"
+        android:background="#8000"/>
+
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize">
-
-
+        android:layout_marginTop="130dp">
 
 
         <ScrollView
@@ -53,11 +62,9 @@
                 android:orientation="vertical">
 
                 <include layout="@layout/weather_now" />
-
-                <include layout="@layout/weather_forecast" />
-
                 <include layout="@layout/weather_api" />
-
+                <include layout="@layout/weather_now_detail" />
+                <include layout="@layout/weather_forecast" />
                 <include layout="@layout/weather_suggestion" />
 
             </LinearLayout>
