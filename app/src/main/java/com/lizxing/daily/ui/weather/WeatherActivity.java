@@ -48,6 +48,14 @@ public class WeatherActivity extends AppCompatActivity {
     private TextView aqiText;
     private TextView pm25Text;
     private TextView qltyText;
+    private TextView tmpText;
+    private TextView flText;
+    private TextView winddirText;
+    private TextView windscText;
+    private TextView windspdText;
+    private TextView humText;
+    private TextView pcpnText;
+    private TextView visText;
     private TextView comfortText;
     private TextView carWashText;
     private TextView sportText;
@@ -82,6 +90,14 @@ public class WeatherActivity extends AppCompatActivity {
         aqiText = findViewById(R.id.aqi_text);
         pm25Text = findViewById(R.id.pm25_text);
         qltyText = findViewById(R.id.qlty_text);
+        flText = findViewById(R.id.now_fl);
+        tmpText = findViewById(R.id.now_tmp);
+        winddirText = findViewById(R.id.now_wind_dir);
+        windscText = findViewById(R.id.now_wind_sc);
+        windspdText = findViewById(R.id.now_wind_spd);
+        humText = findViewById(R.id.now_hum);
+        pcpnText = findViewById(R.id.now_pcpn);
+        visText = findViewById(R.id.now_vis);
         comfortText = findViewById(R.id.comfort_text);
         carWashText = findViewById(R.id.car_wash_text);
         sportText = findViewById(R.id.sport_text);
@@ -141,7 +157,7 @@ public class WeatherActivity extends AppCompatActivity {
      * 根据天气id请求城市天气信息。
      */
     public void requestWeather(final String weatherId) {
-        String weatherAddress = "http://guolin.tech/api/weather?cityid=" + "CN101010100" + "&key=2ef89d38b1494f0c896b3c43bb849cea";
+        String weatherAddress = "http://guolin.tech/api/weather?cityid=" + "CN101280101" + "&key=2ef89d38b1494f0c896b3c43bb849cea";
         HttpUtil.sendOkHttpRequest(weatherAddress, new Callback() {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
@@ -187,6 +203,14 @@ public class WeatherActivity extends AppCompatActivity {
         String updateTime = weather.basic.update.updateTime.split(" ")[1];
         String degree = weather.now.temperature + "℃";
         String weatherInfo = weather.now.more.info;
+        String fl = weather.now.fl;
+        String windDir = weather.now.windDir;
+        String windSc = weather.now.windSc;
+        String windSpd = weather.now.windSpd;
+        String hum = weather.now.hum;
+        String pcpn = weather.now.pcpn;
+        String vis = weather.now.vis;
+
         weatherCity.setText(cityName);
         weatherUpdateTime.setText(getResources().getString(R.string.update_time)+updateTime);
         degreeText.setText(degree);
@@ -209,6 +233,14 @@ public class WeatherActivity extends AppCompatActivity {
             pm25Text.setText(weather.aqi.city.pm25);
             qltyText.setText(weather.aqi.city.qlty);
         }
+        tmpText.setText(degree);
+        flText.setText(fl);
+        winddirText.setText(windDir);
+        windscText.setText(windSc);
+        windspdText.setText(windSpd);
+        humText.setText(hum);
+        pcpnText.setText(pcpn);
+        visText.setText(vis);
         String comfort = "舒适度：" + weather.suggestion.comfort.info;
         String carWash = "洗车指数：" + weather.suggestion.carWash.info;
         String sport = "运行建议：" + weather.suggestion.sport.info;

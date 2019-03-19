@@ -1,13 +1,14 @@
 <resources>
     <string name="app_name">Daily</string>
-    <string name="science">Science</string>
-    <string name="weather">Weather</string>
+    <string name="science">科学</string>
+    <string name="weather">天气</string>
     <string name="weather2">天气</string>
-    <string name="news">News</string>
-    <string name="books">Books</string>
-    <string name="settings">Setting</string>
-    <string name="about">About</string>
+    <string name="news">新闻</string>
+    <string name="books">图书</string>
+    <string name="settings">设置</string>
+    <string name="about">关于</string>
     <string name="daily">每日</string>
+    <string name="news_details">新闻详情</string>
     <string name="city">城市</string>
     <string name="weather_info">天气信息</string>
     <string name="weather_now_detail">实况细节</string>
@@ -15,6 +16,14 @@
     <string name="degree">温度</string>
     <string name="forecast">预报</string>
     <string name="today">今日</string>
+    <string name="tmp">温度</string>
+    <string name="fl">体感温度</string>
+    <string name="wind_dir">风向</string>
+    <string name="wind_sc">风力</string>
+    <string name="wind_spd">风速</string>
+    <string name="hum">相对湿度</string>
+    <string name="pcpn">降雨量</string>
+    <string name="vis">能见度</string>
     <string name="airquality">空气质量</string>
     <string name="aqi">AQI指数</string>
     <string name="pm25">PM2.5指数</string>

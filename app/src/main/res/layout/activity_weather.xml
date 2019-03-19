@@ -16,13 +16,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:background="@mipmap/beijing"/>
+        android:background="@mipmap/guangzhou"/>
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="#8000"
+        android:background="#5000"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:layout_scrollFlags="scroll|enterAlways"
@@ -33,12 +33,12 @@
         android:id="@+id/weather_city"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:text="@string/daily"
+        android:text="@string/city"
         android:textColor="#fff"
         android:textSize="40sp"
         android:gravity="center"
         android:layout_marginTop="50dp"
-        android:background="#8000"/>
+        android:background="#5000"/>
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh"
