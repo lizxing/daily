@@ -3,27 +3,31 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_weather"
-            android:icon="@mipmap/ic_menu"
+            android:icon="@mipmap/ic_weather"
             android:title="@string/weather"/>
         <item
             android:id="@+id/nav_news"
-            android:icon="@mipmap/ic_menu"
+            android:icon="@mipmap/ic_news"
             android:title="@string/news"/>
         <item
             android:id="@+id/nav_books"
-            android:icon="@mipmap/ic_menu"
+            android:icon="@mipmap/ic_reading"
             android:title="@string/books"/>
     </group>
 
     <item android:title="@string/daily">
         <menu>
             <item
+                android:id="@+id/nav_night"
+                android:icon="@mipmap/ic_night"
+                android:title="@string/night"/>
+            <item
                 android:id="@+id/nav_share"
-                android:icon="@mipmap/ic_menu"
+                android:icon="@mipmap/ic_setting"
                 android:title="@string/settings"/>
             <item
-                android:id="@+id/nav_send"
-                android:icon="@mipmap/ic_menu"
+                android:id="@+id/nav_about"
+                android:icon="@mipmap/ic_about"
                 android:title="@string/about"/>
         </menu>
     </item>

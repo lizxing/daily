@@ -15,6 +15,7 @@ import android.view.MenuItem;
 
 import com.lizxing.daily.R;
 import com.lizxing.daily.common.ViewPageAdapter;
+import com.lizxing.daily.ui.about.AboutActivity;
 import com.lizxing.daily.ui.news.NewsViewPageAdapter;
 import com.lizxing.daily.ui.weather.WeatherActivity;
 
@@ -82,6 +83,10 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.nav_weather:
                     Intent intent = new Intent(MainActivity.this,WeatherActivity.class);
                     startActivity(intent);
+                    break;
+                case R.id.nav_about:
+                    Intent intent2 = new Intent(MainActivity.this,AboutActivity.class);
+                    startActivity(intent2);
                     break;
                 default:
                     break;
