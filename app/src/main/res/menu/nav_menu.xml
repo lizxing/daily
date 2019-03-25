@@ -15,22 +15,24 @@
             android:title="@string/books"/>
     </group>
 
-    <item android:title="@string/daily">
-        <menu>
-            <item
-                android:id="@+id/nav_night"
-                android:icon="@mipmap/ic_night"
-                android:title="@string/night"/>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@mipmap/ic_setting"
-                android:title="@string/settings"/>
-            <item
-                android:id="@+id/nav_about"
-                android:icon="@mipmap/ic_about"
-                android:title="@string/about"/>
-        </menu>
-    </item>
+        <item android:title="@string/daily"
+               android:id="@+id/navigation_subheader_one">
+            <menu>
+                <item
+                    android:id="@+id/nav_night"
+                    android:icon="@mipmap/ic_night"
+                    android:title="@string/night"/>
+                <item
+                    android:id="@+id/nav_setting"
+                    android:icon="@mipmap/ic_setting"
+                    android:title="@string/settings"/>
+                <item
+                    android:id="@+id/nav_about"
+                    android:icon="@mipmap/ic_about"
+                    android:title="@string/about"/>
+            </menu>
+        </item>
+
 
 
 </menu>

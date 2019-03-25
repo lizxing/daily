@@ -17,6 +17,7 @@ import com.lizxing.daily.R;
 import com.lizxing.daily.common.ViewPageAdapter;
 import com.lizxing.daily.ui.about.AboutActivity;
 import com.lizxing.daily.ui.news.NewsViewPageAdapter;
+import com.lizxing.daily.ui.setting.SettingActivity;
 import com.lizxing.daily.ui.weather.WeatherActivity;
 
 
@@ -87,6 +88,10 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.nav_about:
                     Intent intent2 = new Intent(MainActivity.this,AboutActivity.class);
                     startActivity(intent2);
+                    break;
+                case R.id.nav_setting:
+                    Intent intent3 = new Intent(MainActivity.this,SettingActivity.class);
+                    startActivity(intent3);
                     break;
                 default:
                     break;

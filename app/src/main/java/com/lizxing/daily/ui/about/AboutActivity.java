@@ -41,13 +41,14 @@ public class AboutActivity extends AppCompatActivity {
         View aboutPage = new AboutPage(this)
                 .isRTL(false)
                 .setImage(R.drawable.img_daily_black)//图片
-                .setDescription("每日，看看新闻看看天气")//介绍
+                .setDescription("每日，管好你的碎片时间")//介绍
                 .addGroup("应用简介")
-                .addItem(new Element().setTitle("版本号 1.0"))
-                .addItem(new Element().setTitle("  每日是一个日常功能APP，主要方便用户在碎片时间看看天气，看看新闻，后续功能待开发。。。"))
+                .addItem(new Element().setTitle("\t版本号 1.0"))
+                .addItem(new Element().setTitle("\t通过每日APP，你可以：\n\t1、看看图片\n\t2、看看天气\n\t3、看看新闻\n\t后续功能待开发。。。"))
                 .addGroup("数据来源")
-                .addItem(new Element().setTitle("和风天气"))
-                .addItem(new Element().setTitle("天行数据"))
+                .addItem(new Element().setTitle("\t必应"))
+                .addItem(new Element().setTitle("\t和风天气"))
+                .addItem(new Element().setTitle("\t天行数据"))
                 .addGroup("联系")
                 .addEmail("1483588183@qq.com")//邮箱
 //                .addWebsite("http://zhaoweihao.me")//网站
