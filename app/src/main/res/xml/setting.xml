@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="设置组1">
+        <!--<EditTextPreference-->
+            <!--android:dialogTitle="输入您的名字"-->
+            <!--android:key="name"-->
+            <!--android:singleLine="true"-->
+            <!--android:summary="设置您的姓名"-->
+            <!--android:title="姓名" />-->
+        <ListPreference
+            android:entries="@array/languages"
+            android:entryValues="@array/languages_value"
+            android:key="sex"
+            android:summary="选择语言"
+            android:title="语言" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="night"
+            android:summaryOff="关"
+            android:summaryOn="开"
+            android:title="夜间模式" />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="isOk"
+            android:summaryOff="关闭"
+            android:summaryOn="打开"
+            android:title="非WIFI下自动进入无图模式" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="isOk"
+            android:summaryOff="关闭"
+            android:summaryOn="打开"
+            android:title="连按两次返回退出应用" />
+        <Preference
+            android:key="clear_cache"
+            android:summary="清除本应用缓存"
+            android:title="清楚缓存" />
+    </PreferenceCategory>
+
+</PreferenceScreen>
+

@@ -36,10 +36,7 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 public class WeatherActivity extends AppCompatActivity {
-    public DrawerLayout drawerLayout;
     public SwipeRefreshLayout swipeRefresh;
-    private ScrollView weatherLayout;
-    private Button backButton;
     private TextView weatherCity;
     private TextView weatherUpdateTime;
     private TextView degreeText;
@@ -59,7 +56,6 @@ public class WeatherActivity extends AppCompatActivity {
     private TextView comfortText;
     private TextView carWashText;
     private TextView sportText;
-    private ImageView bingPicImg;
     private String mWeatherId;
     private Toolbar toolbar;
 
@@ -80,7 +76,6 @@ public class WeatherActivity extends AppCompatActivity {
     }
 
     private void initView(){
-        bingPicImg = findViewById(R.id.bing_pic_img);
 //        weatherLayout = findViewById(R.id.weather_layout);
         weatherCity = findViewById(R.id.weather_city);
         weatherUpdateTime = findViewById(R.id.weather_update_time);
@@ -103,8 +98,6 @@ public class WeatherActivity extends AppCompatActivity {
         sportText = findViewById(R.id.sport_text);
         swipeRefresh = findViewById(R.id.swipe_refresh);
         swipeRefresh.setColorSchemeResources(R.color.colorPrimary);
-        //drawerLayout = findViewById(R.id.drawer_layout);
-        //backButton = findViewById(R.id.button_back);
         toolbar = findViewById(R.id.toolbar);
 
     }
@@ -128,21 +121,10 @@ public class WeatherActivity extends AppCompatActivity {
                 requestWeather(mWeatherId);
             }
         });
-//        backButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(WeatherActivity.this,MainActivity.class);
-//                startActivity(intent);
-//            }
-//        });
         String bingPic = prefs.getString("bing_pic", null);
-        if(bingPic != null){
-            Glide.with(this).load(bingPic).into(bingPicImg);
-        }else {
-            loadBingPic();
-        }
 
-        toolbar.setTitle(getResources().getString(R.string.weather2));
+
+        toolbar.setTitle(getResources().getString(R.string.weather));
         toolbar.setTitleTextColor(Color.WHITE);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -192,7 +174,6 @@ public class WeatherActivity extends AppCompatActivity {
                 });
             }
         });
-        loadBingPic();
     }
 
     /**
@@ -247,33 +228,7 @@ public class WeatherActivity extends AppCompatActivity {
         comfortText.setText(comfort);
         carWashText.setText(carWash);
         sportText.setText(sport);
-//        weatherLayout.setVisibility(View.VISIBLE);
     }
 
-    /**
-     * 获取必应每日一图
-     */
-    private void loadBingPic(){
-        String urlBingPic = "http://guolin.tech/api/bing_pic";
-        HttpUtil.sendOkHttpRequest(urlBingPic, new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
-            }
 
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                final String bingPic = response.body().string();
-                SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(WeatherActivity.this).edit();
-                editor.putString("bing_pic", bingPic);
-                editor.apply();
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Glide.with(WeatherActivity.this).load(bingPic).into(bingPicImg);
-                    }
-                });
-            }
-        });
-    }
 }

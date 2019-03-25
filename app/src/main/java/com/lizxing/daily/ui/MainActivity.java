@@ -17,6 +17,7 @@ import com.lizxing.daily.R;
 import com.lizxing.daily.common.ViewPageAdapter;
 import com.lizxing.daily.ui.about.AboutActivity;
 import com.lizxing.daily.ui.news.NewsViewPageAdapter;
+import com.lizxing.daily.ui.picture.PictureActivity;
 import com.lizxing.daily.ui.setting.SettingActivity;
 import com.lizxing.daily.ui.weather.WeatherActivity;
 
@@ -81,9 +82,13 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
             switch (menuItem.getItemId()){
-                case R.id.nav_weather:
-                    Intent intent = new Intent(MainActivity.this,WeatherActivity.class);
+                case R.id.nav_picture:
+                    Intent intent = new Intent(MainActivity.this,PictureActivity.class);
                     startActivity(intent);
+                    break;
+                case R.id.nav_weather:
+                    Intent intent1 = new Intent(MainActivity.this,WeatherActivity.class);
+                    startActivity(intent1);
                     break;
                 case R.id.nav_about:
                     Intent intent2 = new Intent(MainActivity.this,AboutActivity.class);

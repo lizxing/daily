@@ -1,10 +1,14 @@
 package com.lizxing.daily.ui.setting;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.lizxing.daily.R;
 import com.lizxing.daily.ui.MainActivity;
@@ -13,6 +17,7 @@ import com.lizxing.daily.ui.about.AboutActivity;
 public class SettingActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
+    private LinearLayout linearLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +27,7 @@ public class SettingActivity extends AppCompatActivity {
     }
 
     private void intView(){
+        //标题栏
         toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -31,5 +37,7 @@ public class SettingActivity extends AppCompatActivity {
             }
         });
 
+        //加载设置内容fragment
+        getFragmentManager().beginTransaction().replace(R.id.setting_content, new SettingFragment()).commit();
     }
 }
