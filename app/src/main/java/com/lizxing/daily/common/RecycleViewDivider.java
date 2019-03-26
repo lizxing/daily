@@ -1,9 +1,11 @@
-package com.lizxing.daily.common;
 
 /**
  * 轮子
  * RecycleView分割线
  */
+
+package com.lizxing.daily.common;
+
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -15,7 +17,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-
 
 public class RecycleViewDivider extends RecyclerView.ItemDecoration {
 

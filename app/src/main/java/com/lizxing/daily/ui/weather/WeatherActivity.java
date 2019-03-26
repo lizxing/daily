@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -23,10 +24,13 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.lizxing.daily.R;
+import com.lizxing.daily.common.MyScrollView;
+import com.lizxing.daily.common.MyScrollView.OnScrollListener;
 import com.lizxing.daily.gson.Forecast;
 import com.lizxing.daily.gson.Weather;
 import com.lizxing.daily.ui.MainActivity;
 import com.lizxing.daily.utils.HttpUtil;
+import com.lizxing.daily.utils.StatusBarUtil;
 import com.lizxing.daily.utils.Utility;
 
 import java.io.IOException;
@@ -35,7 +39,7 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class WeatherActivity extends AppCompatActivity {
+public class WeatherActivity extends AppCompatActivity implements OnScrollListener {
     public SwipeRefreshLayout swipeRefresh;
     private TextView weatherCity;
     private TextView weatherUpdateTime;
@@ -46,31 +50,39 @@ public class WeatherActivity extends AppCompatActivity {
     private TextView pm25Text;
     private TextView qltyText;
     private TextView tmpText;
+    private TextView tmpTextTop;
     private TextView flText;
+    private TextView flTextTop;
     private TextView winddirText;
+    private TextView winddirTextTop;
     private TextView windscText;
+    private TextView windscTextTop;
     private TextView windspdText;
+    private TextView windspdTextTop;
     private TextView humText;
+    private TextView humTextTop;
     private TextView pcpnText;
+    private TextView pcpnTextTop;
     private TextView visText;
+    private TextView visTextTop;
     private TextView comfortText;
     private TextView carWashText;
     private TextView sportText;
     private String mWeatherId;
     private Toolbar toolbar;
+    private MyScrollView myScrollView;
+    private LinearLayout detailLayout;
+    private LinearLayout detailTopLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        状态栏与背景融合
-//        if (Build.VERSION.SDK_INT >= 21) {
-//            View decorView = getWindow().getDecorView();
-//            decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-//                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-//            getWindow().setStatusBarColor(Color.TRANSPARENT);
-//        }
+        //设置状态栏颜色
+        StatusBarUtil.setStatusBarColor(this, getResources().getColor(R.color.SlateGray));
+
         setContentView(R.layout.activity_weather);
 
+        //初始化布局及数据
         initView();
         initData();
     }
@@ -99,8 +111,32 @@ public class WeatherActivity extends AppCompatActivity {
         swipeRefresh = findViewById(R.id.swipe_refresh);
         swipeRefresh.setColorSchemeResources(R.color.colorPrimary);
         toolbar = findViewById(R.id.toolbar);
+        myScrollView = findViewById(R.id.myscrollview);
+        detailLayout = findViewById(R.id.detail);
+        detailTopLayout = findViewById(R.id.top_detail);
 
+        //include相同布局必须重新设置detailTopLayout里面的数据
+        flTextTop = detailTopLayout.findViewById(R.id.now_fl);
+        tmpTextTop = detailTopLayout.findViewById(R.id.now_tmp);
+        winddirTextTop = detailTopLayout.findViewById(R.id.now_wind_dir);
+        windscTextTop = detailTopLayout.findViewById(R.id.now_wind_sc);
+        windspdTextTop = detailTopLayout.findViewById(R.id.now_wind_spd);
+        humTextTop = detailTopLayout.findViewById(R.id.now_hum);
+        pcpnTextTop = detailTopLayout.findViewById(R.id.now_pcpn);
+        visTextTop = detailTopLayout.findViewById(R.id.now_vis);
+        //监听ScrollView滑动
+        myScrollView.setOnScrollListener(this);
+        //当布局的状态或者控件的可见性发生改变回调的接口
+        findViewById(R.id.weather_layout).getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                //使得上面的购买布局和下面的购买布局重合
+                onScroll(myScrollView.getScrollY());
+            }
+
+        });
     }
+
     private void initData(){
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String weatherString = prefs.getString("weather", null);
@@ -121,7 +157,6 @@ public class WeatherActivity extends AppCompatActivity {
                 requestWeather(mWeatherId);
             }
         });
-        String bingPic = prefs.getString("bing_pic", null);
 
 
         toolbar.setTitle(getResources().getString(R.string.weather));
@@ -134,6 +169,13 @@ public class WeatherActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onScroll(int scrollY) {
+        int mBuyLayout2ParentTop = Math.max(scrollY, detailLayout.getTop());
+        detailTopLayout.layout(0, mBuyLayout2ParentTop, detailTopLayout.getWidth(), mBuyLayout2ParentTop + detailTopLayout.getHeight());
+    }
+
 
     /**
      * 根据天气id请求城市天气信息。
@@ -222,6 +264,14 @@ public class WeatherActivity extends AppCompatActivity {
         humText.setText(hum);
         pcpnText.setText(pcpn);
         visText.setText(vis);
+        tmpTextTop.setText(degree);
+        flTextTop.setText(fl);
+        winddirTextTop.setText(windDir);
+        windscTextTop.setText(windSc);
+        windspdTextTop.setText(windSpd);
+        humTextTop.setText(hum);
+        pcpnTextTop.setText(pcpn);
+        visTextTop.setText(vis);
         String comfort = "舒适度：" + weather.suggestion.comfort.info;
         String carWash = "洗车指数：" + weather.suggestion.carWash.info;
         String sport = "运行建议：" + weather.suggestion.sport.info;

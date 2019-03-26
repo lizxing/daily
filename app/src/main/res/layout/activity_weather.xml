@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/weather_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
@@ -16,13 +17,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:background="@drawable/img_guangzhou"/>
+        android:background="@color/SlateGray"/>
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="#5000"
+
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:layout_scrollFlags="scroll|enterAlways"
@@ -37,8 +38,7 @@
         android:textColor="#fff"
         android:textSize="40sp"
         android:gravity="center"
-        android:layout_marginTop="50dp"
-        android:background="#5000"/>
+        android:layout_marginTop="50dp" />
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh"
@@ -47,12 +47,18 @@
         android:layout_marginTop="130dp">
 
 
-        <ScrollView
-            android:id="@+id/weather_layout"
+        <!--<ScrollView-->
+            <!--android:id="@+id/weather_layout"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:overScrollMode="never"-->
+            <!--android:scrollbars="none">-->
+
+        <!--自定义ScrollView布局-->
+        <com.lizxing.daily.common.MyScrollView
+            android:id="@+id/myscrollview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:overScrollMode="never"
-            android:scrollbars="none">
+            android:layout_height="match_parent">
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -65,16 +71,22 @@
                     android:orientation="vertical">
 
                     <include layout="@layout/weather_now" />
+                    <include
+                        android:id="@+id/detail"
+                        layout="@layout/weather_now_detail" />
                     <include layout="@layout/weather_api" />
-                    <include layout="@layout/weather_now_detail" />
                     <include layout="@layout/weather_forecast" />
                     <include layout="@layout/weather_suggestion" />
-
                 </LinearLayout>
-                <!--<include layout="@layout/weather_now_detail" />-->
+
+                <include
+                    android:id="@+id/top_detail"
+                    layout="@layout/weather_now_detail" />
             </FrameLayout>
 
-        </ScrollView>
+        </com.lizxing.daily.common.MyScrollView>
+
+        <!--</ScrollView>-->
 
 
     </android.support.v4.widget.SwipeRefreshLayout>
