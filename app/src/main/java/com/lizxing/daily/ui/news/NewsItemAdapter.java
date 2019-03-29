@@ -11,13 +11,13 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.lizxing.daily.R;
-import com.lizxing.daily.common.Item;
+import com.lizxing.daily.items.NewsItem;
 
 import java.util.List;
 
 public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHolder> {
 
-    private List<Item> mItemList;
+    private List<NewsItem> mItemList;
     private Context mContext;
 
     static class ViewHolder extends RecyclerView.ViewHolder{
@@ -34,7 +34,7 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
             ItemDescr = view.findViewById(R.id.descr_text);
         }
     }
-    public NewsItemAdapter(List<Item> itemList, Context context){
+    public NewsItemAdapter(List<NewsItem> itemList, Context context){
         mItemList = itemList;
         mContext = context;
     }
@@ -48,10 +48,10 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
             @Override
             public void onClick(View v) {
                 int position = holder.getAdapterPosition();
-                Item item = mItemList.get(position);
+                NewsItem item = mItemList.get(position);
                 Intent intent = new Intent(mContext, NewsContentActivity.class);
-                intent.putExtra("title",item.getTitle());
-                intent.putExtra("uri",item.getUri());
+                intent.putExtra("title", item.getTitle());
+                intent.putExtra("uri", item.getUri());
                 mContext.startActivity(intent);
             }
         });
@@ -60,7 +60,7 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Item item = mItemList.get(position);
+        NewsItem item = mItemList.get(position);
         Glide.with(mContext).load(item.getImageUrl()).into(holder.ItemPic);
         holder.ItemText.setText(item.getTitle());
         holder.ItemDescr.setText(item.getDescr());

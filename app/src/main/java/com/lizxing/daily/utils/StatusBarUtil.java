@@ -16,4 +16,13 @@ public class StatusBarUtil {
             activity.getWindow().setStatusBarColor(color);
         }
     }
+    public static void setStatusFontColor(Activity activity,boolean isLight){
+        if(Build.VERSION.SDK_INT >= 21) {
+            if (isLight){
+                activity.getWindow().getDecorView().setSystemUiVisibility( View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+            }else{
+                activity.getWindow().getDecorView().setSystemUiVisibility( 1024|256);
+            }
+        }
+    }
 }

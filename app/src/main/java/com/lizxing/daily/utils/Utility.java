@@ -1,6 +1,8 @@
 package com.lizxing.daily.utils;
 
 import com.google.gson.Gson;
+import com.lizxing.daily.gson.English;
+import com.lizxing.daily.gson.EnglishList;
 import com.lizxing.daily.gson.NewsList;
 import com.lizxing.daily.gson.Weather;
 
@@ -30,6 +32,14 @@ public class Utility {
      */
     public static NewsList handleNewsResponse(final String requestText){
         return new Gson().fromJson(requestText, NewsList.class);
+    }
+
+    /**
+     * 英语相关
+     * 将返回的JSON解析
+     */
+    public static EnglishList handleEnglishResponse(final String requestText){
+        return new Gson().fromJson(requestText, EnglishList.class);
     }
 
 }

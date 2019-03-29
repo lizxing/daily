@@ -1,12 +1,12 @@
-package com.lizxing.daily.common;
+package com.lizxing.daily.items;
 
-public class Item {
+public class NewsItem {
     private String title;
     private String descr;
     private String imageUrl;
     private String uri;
 
-    public Item(String title,String descr, String imageUrl, String uri){
+    public NewsItem(String title, String descr, String imageUrl, String uri){
         this.title = title;
         this.imageUrl = imageUrl;
         this.descr = descr;

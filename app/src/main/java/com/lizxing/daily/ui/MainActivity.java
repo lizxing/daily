@@ -14,10 +14,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.lizxing.daily.R;
-import com.lizxing.daily.common.ViewPageAdapter;
 import com.lizxing.daily.ui.about.AboutActivity;
 import com.lizxing.daily.ui.news.NewsViewPageAdapter;
-import com.lizxing.daily.ui.picture.PictureActivity;
+import com.lizxing.daily.ui.English.EnglishActivity;
 import com.lizxing.daily.ui.setting.SettingActivity;
 import com.lizxing.daily.ui.weather.WeatherActivity;
 
@@ -82,8 +81,8 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
             switch (menuItem.getItemId()){
-                case R.id.nav_picture:
-                    Intent intent = new Intent(MainActivity.this,PictureActivity.class);
+                case R.id.nav_English:
+                    Intent intent = new Intent(MainActivity.this,EnglishActivity.class);
                     startActivity(intent);
                     break;
                 case R.id.nav_weather:

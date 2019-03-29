@@ -1,8 +1,6 @@
 package com.lizxing.daily.ui.news;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -13,17 +11,15 @@ import android.widget.Toast;
 
 import com.lizxing.daily.R;
 import com.lizxing.daily.common.DailyFragment;
-import com.lizxing.daily.common.Item;
+import com.lizxing.daily.items.NewsItem;
 import com.lizxing.daily.common.RecycleViewDivider;
 import com.lizxing.daily.gson.News;
 import com.lizxing.daily.gson.NewsList;
-import com.lizxing.daily.ui.MainActivity;
 import com.lizxing.daily.utils.HttpUtil;
 import com.lizxing.daily.utils.Utility;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import okhttp3.Call;
@@ -50,7 +46,7 @@ public class NewsPageFragment extends DailyFragment {
     private int mPage;
     private RecyclerView recyclerView;
     private NewsItemAdapter newsItemAdapter;
-    private List<Item> itemList = new ArrayList<Item>();
+    private List<NewsItem> itemList = new ArrayList<NewsItem>();
 
 
     public static NewsPageFragment newInstance(int page) {
@@ -93,7 +89,7 @@ public class NewsPageFragment extends DailyFragment {
     }
 
     /**
-     * 发起请求
+     * 发起请求获取新闻
      */
     private void requestNews(){
         String newsAddress = getAddress(mPage);
@@ -107,7 +103,7 @@ public class NewsPageFragment extends DailyFragment {
                 if (code == 200){
                     itemList.clear();
                     for (News news:newlist.newsList){
-                        Item item = new Item(news.title,news.description,news.picUrl, news.url);
+                        NewsItem item = new NewsItem(news.title,news.description,news.picUrl, news.url);
                         itemList.add(item);
                     }
 
