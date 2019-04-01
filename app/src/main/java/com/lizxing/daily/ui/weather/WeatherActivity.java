@@ -78,7 +78,7 @@ public class WeatherActivity extends AppCompatActivity implements OnScrollListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //设置状态栏颜色
-        StatusBarUtil.setStatusBarColor(this, getResources().getColor(R.color.SlateGray));
+        StatusBarUtil.setStatusBarColor(this, getResources().getColor(R.color.colorPrimary));
 
         setContentView(R.layout.activity_weather);
 
@@ -272,9 +272,9 @@ public class WeatherActivity extends AppCompatActivity implements OnScrollListen
         humTextTop.setText(hum);
         pcpnTextTop.setText(pcpn);
         visTextTop.setText(vis);
-        String comfort = "舒适度：" + weather.suggestion.comfort.info;
-        String carWash = "洗车指数：" + weather.suggestion.carWash.info;
-        String sport = "运行建议：" + weather.suggestion.sport.info;
+        String comfort = "舒适度：\n" + weather.suggestion.comfort.info;
+        String carWash = "洗车指数：\n" + weather.suggestion.carWash.info;
+        String sport = "运行建议：\n" + weather.suggestion.sport.info;
         comfortText.setText(comfort);
         carWashText.setText(carWash);
         sportText.setText(sport);

@@ -3,6 +3,7 @@ package com.lizxing.daily.ui.English;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -30,6 +31,8 @@ public class EnglishActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private ImageView imageView;
     private TextView textView;
+    private TextView refreshText;
+    private SwipeRefreshLayout swipeRefresh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,11 +40,20 @@ public class EnglishActivity extends AppCompatActivity {
         setContentView(R.layout.activity_english);
 
         initView();
+        initData();
     }
 
     private void initView(){
-        //标题栏
         toolbar = findViewById(R.id.toolbar);
+        imageView = findViewById(R.id.picture);
+        textView = findViewById(R.id.English_text);
+        refreshText = findViewById(R.id.refresh_text);
+        swipeRefresh = findViewById(R.id.swipe_refresh);
+        swipeRefresh.setColorSchemeResources(R.color.colorPrimary);
+    }
+
+    private void initData(){
+        //标题栏
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,8 +62,7 @@ public class EnglishActivity extends AppCompatActivity {
             }
         });
 
-        //图片
-        imageView = findViewById(R.id.picture);
+        //背景图片
         //判断是否有缓存
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String bingPic = prefs.getString("bing_pic", null);
@@ -62,7 +73,6 @@ public class EnglishActivity extends AppCompatActivity {
         }
 
         //句子
-        textView = findViewById(R.id.English_text);
         String text = prefs.getString("text", null);
         if (text != null) {
             textView.setText(text);
@@ -70,6 +80,21 @@ public class EnglishActivity extends AppCompatActivity {
             requestEnglish();
         }
 
+        //换一句
+        refreshText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requestEnglish();
+            }
+        });
+
+        //背景刷新
+        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                requestBingPic();
+            }
+        });
     }
 
     /**
@@ -81,6 +106,7 @@ public class EnglishActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();
+                swipeRefresh.setRefreshing(false);
             }
 
             @Override
@@ -93,6 +119,7 @@ public class EnglishActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         Glide.with(EnglishActivity.this).load(bingPic).into(imageView);
+                        swipeRefresh.setRefreshing(false);
                     }
                 });
             }

@@ -1,15 +1,15 @@
-package com.lizxing.daily.ui.news;
+package com.lizxing.daily.ui.articles;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
 import com.lizxing.daily.common.ViewPageAdapter;
 
-public class NewsViewPageAdapter extends ViewPageAdapter {
+public class ArticlesViewPageAdapter extends ViewPageAdapter {
 
-    public NewsViewPageAdapter(FragmentManager fm) {
+    public ArticlesViewPageAdapter(FragmentManager fm) {
         super(fm);
-        String[] Tabs = {"国际", "国内", "社会", "人工智能", "IT资讯", "VR科技", "移动互联", "奇闻", "健康", "旅游", "体育"};
+        String[] Tabs = {"精选", "收藏"};
         setTabs(Tabs);
     }
 
@@ -18,7 +18,7 @@ public class NewsViewPageAdapter extends ViewPageAdapter {
      */
     @Override
     public Fragment getItem(int i) {
-        return NewsPageFragment.newInstance(i + 1); //谷歌推荐的实例化fragment方法
+        return ArticlesPageFragment.newInstance("1","2"); //谷歌推荐的实例化fragment方法
     }
 
     /**

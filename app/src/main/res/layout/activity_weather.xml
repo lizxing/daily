@@ -8,16 +8,10 @@
 
 
     <ImageView
-        android:id="@+id/bing_pic_img"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:visibility="gone"/>
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:background="@color/SlateGray"/>
+        android:background="@color/colorPrimary"/>
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"

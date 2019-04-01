@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -11,10 +12,12 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.lizxing.daily.R;
 import com.lizxing.daily.ui.about.AboutActivity;
+import com.lizxing.daily.ui.news.NewsPageFragment;
 import com.lizxing.daily.ui.news.NewsViewPageAdapter;
 import com.lizxing.daily.ui.English.EnglishActivity;
 import com.lizxing.daily.ui.setting.SettingActivity;
@@ -23,6 +26,7 @@ import com.lizxing.daily.ui.weather.WeatherActivity;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = "===MainActivity";
     private Toolbar toolbar;
     private DrawerLayout mDrawerLayout;
     private NewsViewPageAdapter newsViewPageAdapter;
@@ -35,26 +39,31 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         initView();
+        initData();
     }
 
     private void initView(){
         toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
         mDrawerLayout = findViewById(R.id.drawer_layout);
+        tabLayout = findViewById(R.id.tabs);
+        viewPager = findViewById(R.id.viewpager);
+    }
+
+    private void initData(){
+        //标题栏
+        setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if(actionBar != null){
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeAsUpIndicator(R.mipmap.ic_menu);
         }
 
+        //导航栏
         NavigationView navView = findViewById(R.id.nav_view);
         navView.setNavigationItemSelectedListener(OnClickNavItem);
 
         //加载新闻相关
         newsViewPageAdapter = new NewsViewPageAdapter(getSupportFragmentManager());
-        tabLayout = findViewById(R.id.tabs);
-        viewPager = findViewById(R.id.viewpager);
         viewPager.setAdapter(newsViewPageAdapter);
         viewPager.setOffscreenPageLimit(3);//懒加载左右各3页
         tabLayout.setupWithViewPager(viewPager);
@@ -80,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
     private NavigationView.OnNavigationItemSelectedListener OnClickNavItem = new NavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+            Fragment current = getSupportFragmentManager().findFragmentById(R.id.viewpager);
             switch (menuItem.getItemId()){
                 case R.id.nav_English:
                     Intent intent = new Intent(MainActivity.this,EnglishActivity.class);
@@ -88,6 +98,13 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.nav_weather:
                     Intent intent1 = new Intent(MainActivity.this,WeatherActivity.class);
                     startActivity(intent1);
+                    break;
+                case R.id.nav_news:
+                    break;
+                case R.id.nav_articles:
+                    if(current instanceof NewsPageFragment){
+                        //加载文章页面
+                    }
                     break;
                 case R.id.nav_about:
                     Intent intent2 = new Intent(MainActivity.this,AboutActivity.class);

@@ -1,10 +1,11 @@
 <resources>
     <string name="app_name">Daily</string>
-    <string name="science">科学</string>
-    <string name="weather">天气</string>
+    <string name="weather">天气概况</string>
     <string name="English">每日英语</string>
-    <string name="news">新闻</string>
+    <string name="Refresh">换一句</string>
+    <string name="news">新闻热点</string>
     <string name="books">图书</string>
+    <string name="articles">微信精选</string>
     <string name="settings">设置</string>
     <string name="night">夜间模式</string>
     <string name="about">关于</string>
