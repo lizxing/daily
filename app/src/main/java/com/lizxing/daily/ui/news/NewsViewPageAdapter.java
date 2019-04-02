@@ -2,6 +2,7 @@ package com.lizxing.daily.ui.news;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 
 import com.lizxing.daily.common.ViewPageAdapter;
 

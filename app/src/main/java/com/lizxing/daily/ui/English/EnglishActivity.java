@@ -102,6 +102,7 @@ public class EnglishActivity extends AppCompatActivity {
      */
     private void requestBingPic(){
         String urlBingPic = "http://guolin.tech/api/bing_pic";
+//        String urlBingPic = "https://uploadbeta.com/api/pictures/random/?key=BingEverydayWallpaperPicture";
         HttpUtil.sendOkHttpRequest(urlBingPic, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {

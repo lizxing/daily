@@ -2,6 +2,7 @@ package com.lizxing.daily.ui.articles;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 
 import com.lizxing.daily.common.ViewPageAdapter;
 
@@ -18,7 +19,7 @@ public class ArticlesViewPageAdapter extends ViewPageAdapter {
      */
     @Override
     public Fragment getItem(int i) {
-        return ArticlesPageFragment.newInstance("1","2"); //谷歌推荐的实例化fragment方法
+        return ArticlesPageFragment.newInstance(i + 1); //谷歌推荐的实例化fragment方法
     }
 
     /**

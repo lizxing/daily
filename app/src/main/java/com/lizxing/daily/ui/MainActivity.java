@@ -5,6 +5,8 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -17,11 +19,16 @@ import android.view.MenuItem;
 
 import com.lizxing.daily.R;
 import com.lizxing.daily.ui.about.AboutActivity;
+import com.lizxing.daily.ui.articles.ArticlesPageFragment;
+import com.lizxing.daily.ui.articles.ArticlesViewPageAdapter;
 import com.lizxing.daily.ui.news.NewsPageFragment;
 import com.lizxing.daily.ui.news.NewsViewPageAdapter;
 import com.lizxing.daily.ui.English.EnglishActivity;
 import com.lizxing.daily.ui.setting.SettingActivity;
 import com.lizxing.daily.ui.weather.WeatherActivity;
+
+import java.util.List;
+import java.util.Objects;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -30,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private DrawerLayout mDrawerLayout;
     private NewsViewPageAdapter newsViewPageAdapter;
+    private ArticlesViewPageAdapter articlesViewPageAdapter;
     private TabLayout tabLayout;
     private ViewPager viewPager;
 
@@ -62,10 +70,13 @@ public class MainActivity extends AppCompatActivity {
         NavigationView navView = findViewById(R.id.nav_view);
         navView.setNavigationItemSelectedListener(OnClickNavItem);
 
-        //加载新闻相关
+        //适配器
         newsViewPageAdapter = new NewsViewPageAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(newsViewPageAdapter);
+        articlesViewPageAdapter = new ArticlesViewPageAdapter(getSupportFragmentManager());
         viewPager.setOffscreenPageLimit(3);//懒加载左右各3页
+
+        //默认加载新闻相关
+        viewPager.setAdapter(newsViewPageAdapter);
         tabLayout.setupWithViewPager(viewPager);
     }
 
@@ -100,10 +111,19 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent1);
                     break;
                 case R.id.nav_news:
+                    if(current instanceof ArticlesPageFragment){
+                        //加载文章页面
+                        viewPager.setAdapter(newsViewPageAdapter);
+                        tabLayout.setupWithViewPager(viewPager);
+                        tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+                    }
                     break;
                 case R.id.nav_articles:
                     if(current instanceof NewsPageFragment){
                         //加载文章页面
+                        viewPager.setAdapter(articlesViewPageAdapter);
+                        tabLayout.setupWithViewPager(viewPager);
+                        tabLayout.setTabMode(TabLayout.MODE_FIXED);
                     }
                     break;
                 case R.id.nav_about:
@@ -121,5 +141,6 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
     };
+
 
 }
