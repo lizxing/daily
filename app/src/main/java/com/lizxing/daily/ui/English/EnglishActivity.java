@@ -1,5 +1,6 @@
 package com.lizxing.daily.ui.English;
 
+import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -13,11 +14,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.dd.CircularProgressButton;
 import com.lizxing.daily.R;
 import com.lizxing.daily.gson.English;
 import com.lizxing.daily.gson.EnglishList;
 import com.lizxing.daily.ui.MainActivity;
 import com.lizxing.daily.utils.HttpUtil;
+import com.lizxing.daily.utils.StatusBarUtil;
 import com.lizxing.daily.utils.Utility;
 
 import java.io.IOException;
@@ -29,27 +32,23 @@ import okhttp3.Response;
 public class EnglishActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
-    private ImageView imageView;
     private TextView textView;
-    private TextView refreshText;
-    private SwipeRefreshLayout swipeRefresh;
+    private CircularProgressButton finishBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_english);
-
+        //设置状态栏颜色
+        StatusBarUtil.setStatusBarColor(this,getResources().getColor(R.color.English_toolbar));
         initView();
         initData();
     }
 
     private void initView(){
         toolbar = findViewById(R.id.toolbar);
-        imageView = findViewById(R.id.picture);
         textView = findViewById(R.id.English_text);
-        refreshText = findViewById(R.id.refresh_text);
-        swipeRefresh = findViewById(R.id.swipe_refresh);
-        swipeRefresh.setColorSchemeResources(R.color.colorPrimary);
+        finishBtn = findViewById(R.id.btnFinish);
     }
 
     private void initData(){
@@ -62,15 +61,9 @@ public class EnglishActivity extends AppCompatActivity {
             }
         });
 
-        //背景图片
+
         //判断是否有缓存
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        String bingPic = prefs.getString("bing_pic", null);
-        if (bingPic != null) {
-            Glide.with(EnglishActivity.this).load(bingPic).into(imageView);
-        } else {
-            requestBingPic();
-        }
 
         //句子
         String text = prefs.getString("text", null);
@@ -80,52 +73,38 @@ public class EnglishActivity extends AppCompatActivity {
             requestEnglish();
         }
 
-        //换一句
-        refreshText.setOnClickListener(new View.OnClickListener() {
+
+        //按钮
+        finishBtn.setText(getResources().getString(R.string.Finish));
+        finishBtn.setIdleText(getResources().getString(R.string.Finish));
+        finishBtn.setCompleteText(getResources().getString(R.string.Next));
+        finishBtn.setIndeterminateProgressMode(true); // 进入不精准进度模式
+        finishBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                requestEnglish();
+                CircularProgressButton btn = (CircularProgressButton) v;
+                int progress = btn.getProgress();
+                if (progress == 0) {
+                    ValueAnimator valueAnimator = ValueAnimator.ofInt(0, 100);
+                    valueAnimator.setDuration(3000);
+                    valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                        @Override
+                        public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                            int value = (int) valueAnimator.getAnimatedValue();
+                            btn.setProgress(value);
+                        }
+                    });
+                    valueAnimator.start();
+                } else {
+                    btn.setProgress(0);
+                    requestEnglish();
+                }
             }
         });
 
-        //背景刷新
-        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                requestBingPic();
-            }
-        });
+
     }
 
-    /**
-     * 发送请求获取必应每日一图
-     */
-    private void requestBingPic(){
-        String urlBingPic = "http://guolin.tech/api/bing_pic";
-//        String urlBingPic = "https://uploadbeta.com/api/pictures/random/?key=BingEverydayWallpaperPicture";
-        HttpUtil.sendOkHttpRequest(urlBingPic, new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
-                swipeRefresh.setRefreshing(false);
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                final String bingPic = response.body().string();
-                SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(EnglishActivity.this).edit();
-                editor.putString("bing_pic", bingPic);
-                editor.apply();
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Glide.with(EnglishActivity.this).load(bingPic).into(imageView);
-                        swipeRefresh.setRefreshing(false);
-                    }
-                });
-            }
-        });
-    }
 
     /**
      * 发起请求获取句子

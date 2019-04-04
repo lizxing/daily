@@ -9,6 +9,8 @@
     <color name="Gainsboro">#DCDCDC</color>
     <color name="White">#FFFFFF</color>
     <color name="Black">#000000</color>
-    <color name="Blue">#4169E1</color>
+    <color name="Blue">#15A0FF</color>
+    <color name="English_toolbar">#27BAD4</color>
+    <color name="English_card">#0099CC</color>
     <color name="TouMing">#00FFFFFF</color>
 </resources>

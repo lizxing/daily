@@ -2,6 +2,8 @@
     <string name="app_name">Daily</string>
     <string name="weather">天气概况</string>
     <string name="English">每日英语</string>
+    <string name="Next">继续下一句</string>
+    <string name="Finish">学好了</string>
     <string name="Refresh">换一句</string>
     <string name="news">新闻热点</string>
     <string name="books">图书</string>
