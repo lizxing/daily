@@ -17,6 +17,14 @@ import com.lizxing.daily.gson.News;
 import com.lizxing.daily.gson.NewsList;
 import com.lizxing.daily.utils.HttpUtil;
 import com.lizxing.daily.utils.Utility;
+import com.scwang.smartrefresh.header.BezierCircleHeader;
+import com.scwang.smartrefresh.layout.api.RefreshHeader;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
+import com.scwang.smartrefresh.layout.footer.BallPulseFooter;
+import com.scwang.smartrefresh.layout.header.BezierRadarHeader;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -87,6 +95,25 @@ public class NewsPageFragment extends DailyFragment {
         recyclerView.setLayoutManager(layoutManager);
         //设置分割线
         //recyclerView.addItemDecoration(new RecycleViewDivider(getContext(), LinearLayoutManager.VERTICAL, 10, getResources().getColor(R.color.Gainsboro)));
+
+        //刷新相关
+        RefreshLayout refreshLayout = view.findViewById(R.id.refreshLayout);
+        refreshLayout.setEnableRefresh(true);//是否启用下拉刷新功能
+        refreshLayout.setEnableLoadMore(false);//是否启用上拉加载功能
+        refreshLayout.setPrimaryColors(getResources().getColor(R.color.colorPrimary));//主题颜色
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                requestNews();
+                refreshlayout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
+            }
+        });
+        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(RefreshLayout refreshlayout) {
+                refreshlayout.finishLoadMore(2000/*,false*/);//传入false表示加载失败
+            }
+        });
     }
 
     /**
