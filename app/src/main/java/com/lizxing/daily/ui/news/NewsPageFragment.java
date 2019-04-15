@@ -1,6 +1,10 @@
 package com.lizxing.daily.ui.news;
 
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -11,6 +15,7 @@ import android.widget.Toast;
 
 import com.lizxing.daily.R;
 import com.lizxing.daily.common.DailyFragment;
+import com.lizxing.daily.database.MyDatabaseHelper;
 import com.lizxing.daily.items.NewsItem;
 import com.lizxing.daily.common.RecycleViewDivider;
 import com.lizxing.daily.gson.News;
@@ -49,12 +54,13 @@ public class NewsPageFragment extends DailyFragment {
     private static final int NEWS_SPORT = 11; //体育
 
 
-    private static final String TAG = "NewsPageFragment";
+    private static final String TAG = "======NewsPageFragment";
     public static final String PAGE = "PAGE";
     private int mPage;
     private RecyclerView recyclerView;
     private NewsItemAdapter newsItemAdapter;
     private List<NewsItem> itemList = new ArrayList<NewsItem>();
+    private MyDatabaseHelper databaseHelper;
 
 
     public static NewsPageFragment newInstance(int page) {
@@ -78,15 +84,18 @@ public class NewsPageFragment extends DailyFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_page_news, container, false);
 
-        initData();
+
         initView(view);
-        
+        initData();
         return view;
     }
     
     private void initData(){
         Log.d(TAG, "initData: 请求数据,页面："+mPage);
-        requestNews();
+        //创建数据库
+        databaseHelper = new MyDatabaseHelper(getContext(), "News.db", null, 1);
+        //requestNews();
+        getNews();
     }
     
     private void initView(View view){
@@ -105,6 +114,7 @@ public class NewsPageFragment extends DailyFragment {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 requestNews();
+                getNews();
                 refreshlayout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
             }
         });
@@ -118,6 +128,7 @@ public class NewsPageFragment extends DailyFragment {
 
     /**
      * 发起请求获取新闻
+     * 数据插入数据库
      */
     private void requestNews(){
         String newsAddress = getAddress(mPage);
@@ -125,23 +136,31 @@ public class NewsPageFragment extends DailyFragment {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 final String responseText = response.body().string();
+                //获取到的数据
                 final NewsList newlist = Utility.handleNewsResponse(responseText);
                 final int code = newlist.code;
                 final String msg = newlist.msg;
-                if (code == 200){
-                    itemList.clear();
-                    for (News news:newlist.newsList){
-                        NewsItem item = new NewsItem(news.title,news.description,news.picUrl, news.url);
-                        itemList.add(item);
-                    }
+                //数据库相关
+                SQLiteDatabase db = databaseHelper.getWritableDatabase();
+                ContentValues values = new ContentValues();
 
+                if (code == 200){
+                    for (News news:newlist.newsList){
+                        //添加数据到数据库
+                        values.put("time", news.time);
+                        values.put("title", news.title);
+                        values.put("description", news.description);
+                        values.put("picUrl", news.picUrl);
+                        values.put("url", news.url);
+                        values.put("type", mPage);
+                        db.insert("News", null, values);
+                        values.clear();
+                    }
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            //更新UI
-                            newsItemAdapter = new NewsItemAdapter(itemList, getContext());
-                            recyclerView.setAdapter(newsItemAdapter);
-                        };
+                            getNews();
+                        }
                     });
                 }else{
                     getActivity().runOnUiThread(new Runnable() {
@@ -209,6 +228,31 @@ public class NewsPageFragment extends DailyFragment {
             default:
         }
         return address;
+    }
+
+    /**
+     * 查询数据库
+     * 获取新闻
+     */
+    private void getNews(){
+        itemList.clear();
+        SQLiteDatabase db = databaseHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select * from News where type = ?",new String[]{String.valueOf(mPage)});
+//        Cursor cursor = db.query("News",null,null,null,null,null,null);
+        if(cursor.moveToFirst()){
+            do{
+                String title = cursor.getString(cursor.getColumnIndex("title"));
+                String description = cursor.getString(cursor.getColumnIndex("description"));
+                String picUrl = cursor.getString(cursor.getColumnIndex("picUrl"));
+                String url = cursor.getString(cursor.getColumnIndex("url"));
+                NewsItem item = new NewsItem(title, description, picUrl, url);
+                itemList.add(item);
+            }while (cursor.moveToNext());
+        }
+        Log.d(TAG, "setAdapter itemList="+itemList);
+        newsItemAdapter = new NewsItemAdapter(itemList, getContext());
+        recyclerView.setAdapter(newsItemAdapter);
+
     }
 
 

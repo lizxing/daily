@@ -20,6 +20,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.lizxing.daily.R;
+import com.lizxing.daily.database.MyDatabaseHelper;
 import com.lizxing.daily.ui.about.AboutActivity;
 import com.lizxing.daily.ui.articles.ArticlesPageFragment;
 import com.lizxing.daily.ui.articles.ArticlesViewPageAdapter;
@@ -81,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
         //默认加载新闻相关
         viewPager.setAdapter(newsViewPageAdapter);
         tabLayout.setupWithViewPager(viewPager);
+
     }
 
 
