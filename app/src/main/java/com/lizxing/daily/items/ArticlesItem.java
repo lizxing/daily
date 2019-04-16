@@ -7,12 +7,11 @@ public class ArticlesItem {
     private String uri;
     private String nickname;
 
-    public ArticlesItem(String title, String descr, String imageUrl, String uri, String nickname){
+    public ArticlesItem(String title, String descr, String imageUrl, String uri){
         this.title = title;
         this.imageUrl = imageUrl;
         this.descr = descr;
         this.uri = uri;
-        this.nickname = nickname;
     }
 
     public String getTitle() {

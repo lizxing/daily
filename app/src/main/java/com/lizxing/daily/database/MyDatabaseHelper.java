@@ -16,6 +16,14 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             + "picUrl text, "
             + "url text, "
             + "type int)";
+    public static final String CREATE_Articles = "create table Articles ("
+            + "id integer primary key autoincrement, "
+            + "time text, "
+            + "title text unique, "
+            + "description text, "
+            + "picUrl text, "
+            + "url text)";
+
 
     private Context mContext;
 
@@ -27,6 +35,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_NEWS);
+        db.execSQL(CREATE_Articles);
         Log.d(TAG, "创建数据库");
     }
 

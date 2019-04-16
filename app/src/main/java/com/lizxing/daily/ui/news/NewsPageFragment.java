@@ -13,8 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.bartoszlipinski.recyclerviewheader2.RecyclerViewHeader;
 import com.lizxing.daily.R;
 import com.lizxing.daily.common.DailyFragment;
+import com.lizxing.daily.common.GlideImageLoader;
 import com.lizxing.daily.database.MyDatabaseHelper;
 import com.lizxing.daily.items.NewsItem;
 import com.lizxing.daily.common.RecycleViewDivider;
@@ -30,6 +32,9 @@ import com.scwang.smartrefresh.layout.footer.BallPulseFooter;
 import com.scwang.smartrefresh.layout.header.BezierRadarHeader;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.youth.banner.Banner;
+import com.youth.banner.BannerConfig;
+import com.youth.banner.Transformer;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -61,6 +66,9 @@ public class NewsPageFragment extends DailyFragment {
     private NewsItemAdapter newsItemAdapter = null;
     private List<NewsItem> itemList = new ArrayList<NewsItem>();
     private MyDatabaseHelper databaseHelper;
+    private Banner banner;
+    private ArrayList<String> list_path;
+    private ArrayList<String> list_title;
 
 
     public static NewsPageFragment newInstance(int page) {
@@ -96,7 +104,6 @@ public class NewsPageFragment extends DailyFragment {
         databaseHelper = new MyDatabaseHelper(getContext(), "News.db", null, 1);
         //获取内容
         requestNews();
-        //getNews();
         //适配器
         newsItemAdapter = new NewsItemAdapter(itemList, getContext());
         recyclerView.setAdapter(newsItemAdapter);
@@ -106,6 +113,46 @@ public class NewsPageFragment extends DailyFragment {
         recyclerView = view.findViewById(R.id.recyclerView_news);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
+        //recyclerViewHeader
+        RecyclerViewHeader header = view.findViewById(R.id.header);
+        header.attachTo(recyclerView);
+        //轮播
+        banner = view.findViewById(R.id.banner);
+        //放图片地址的集合
+        list_path = new ArrayList<>();
+        //放标题的集合
+        list_title = new ArrayList<>();
+
+        list_path.add("http://ww4.sinaimg.cn/large/006uZZy8jw1faic21363tj30ci08ct96.jpg");
+        list_path.add("http://ww4.sinaimg.cn/large/006uZZy8jw1faic259ohaj30ci08c74r.jpg");
+        list_path.add("http://ww4.sinaimg.cn/large/006uZZy8jw1faic2b16zuj30ci08cwf4.jpg");
+        list_path.add("http://ww4.sinaimg.cn/large/006uZZy8jw1faic2e7vsaj30ci08cglz.jpg");
+        list_title.add("好好学习");
+        list_title.add("天天向上");
+        list_title.add("热爱劳动");
+        list_title.add("不搞对象");
+        //设置内置样式，共有六种可以点入方法内逐一体验使用。
+        banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);
+        //设置图片加载器，图片加载器在下方
+        banner.setImageLoader(new GlideImageLoader());
+        //设置图片网址或地址的集合
+        banner.setImages(list_path);
+        //设置轮播的动画效果，内含多种特效，可点入方法内查找后内逐一体验
+        banner.setBannerAnimation(Transformer.Default);
+        //设置轮播图的标题集合
+        banner.setBannerTitles(list_title);
+        //设置轮播间隔时间
+        banner.setDelayTime(3000);
+        //设置是否为自动轮播，默认是“是”。
+        banner.isAutoPlay(true);
+        //设置指示器的位置，小点点，左中右。
+        banner.setIndicatorGravity(BannerConfig.CENTER)
+                //以上内容都可写成链式布局，这是轮播图的监听。比较重要。方法在下面。
+                .setOnBannerListener(null)
+                //必须最后调用的方法，启动轮播图。
+                .start();
+
+
         //设置分割线
         //recyclerView.addItemDecoration(new RecycleViewDivider(getContext(), LinearLayoutManager.VERTICAL, 10, getResources().getColor(R.color.Gainsboro)));
 
@@ -117,7 +164,7 @@ public class NewsPageFragment extends DailyFragment {
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-
+                refreshNews();
                 refreshlayout.finishRefresh(3000/*,false*/);//传入false表示刷新失败
             }
         });
@@ -125,11 +172,11 @@ public class NewsPageFragment extends DailyFragment {
             @Override
             public void onLoadMore(RefreshLayout refreshlayout) {
                 requestNews();
-                //getNews();
                 refreshlayout.finishLoadMore(3000/*,false*/);//传入false表示加载失败
             }
         });
     }
+
 
     /**
      * 发起请求获取新闻
@@ -151,8 +198,6 @@ public class NewsPageFragment extends DailyFragment {
 
                 if (code == 200){
                     for (News news:newlist.newsList){
-                        //删除旧数据
-//                        db.delete("News","type = ?",new String[]{String.valueOf(mPage)});
                         //添加新数据到数据库
                         values.put("time", news.time);
                         values.put("title", news.title);
@@ -197,10 +242,26 @@ public class NewsPageFragment extends DailyFragment {
     }
 
     /**
+     * 刷新新闻
+     * 删除数据库内容
+     * 重新请求
+     */
+    private void refreshNews(){
+        //删除旧数据
+        SQLiteDatabase db = databaseHelper.getWritableDatabase();
+        db.delete("News","type = ?",new String[]{String.valueOf(mPage)});
+        itemList.clear();
+        if(newsItemAdapter != null){
+            newsItemAdapter.notifyDataSetChanged();
+        }
+        requestNews();
+    }
+
+    /**
      * 获取请求地址
      */
     private String getAddress(int mPage){
-        String address = "http://api.tianapi.com/world/?key=6634dbe82d9bddbf27123652cff14e0b";
+        String address = "http://api.tianapi.com/world/?key=6634dbe82d9bddbf27123652cff14e0b&num=20";
         switch(mPage){
             case NEWS_WORLD:
                 break;
@@ -244,6 +305,8 @@ public class NewsPageFragment extends DailyFragment {
      * 获取新闻
      */
     private void getNews(){
+        int len1 = itemList.size();
+        int len2 = 0;
         itemList.clear();
         SQLiteDatabase db = databaseHelper.getReadableDatabase();
         Cursor cursor = db.rawQuery("select * from News where type = ?",new String[]{String.valueOf(mPage)});
@@ -258,7 +321,12 @@ public class NewsPageFragment extends DailyFragment {
                 itemList.add(item);
             }while (cursor.moveToNext());
         }
-        Log.d(TAG, "setAdapter itemList="+itemList);
+        len2 = itemList.size();
+        if(len1 == len2){
+            Toast.makeText(getActivity().getApplicationContext(), "无新数据", Toast.LENGTH_SHORT).show();
+        }else if(len2 > len1){
+            Toast.makeText(getActivity().getApplicationContext(), "已更新"+(len2-len1)+"条数据", Toast.LENGTH_SHORT).show();
+        }
         if(newsItemAdapter != null){
             newsItemAdapter.notifyDataSetChanged();
         }

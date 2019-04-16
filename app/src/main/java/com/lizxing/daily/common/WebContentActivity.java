@@ -1,4 +1,4 @@
-package com.lizxing.daily.ui.news;
+package com.lizxing.daily.common;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -12,17 +12,26 @@ import android.support.v7.widget.Toolbar;
 
 import com.lizxing.daily.R;
 
-public class NewsContentActivity extends AppCompatActivity {
+public class WebContentActivity extends AppCompatActivity {
     private WebView webView;
     private Toolbar toolbar;
+    private String type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_newscontent);
-
+        Bundle bundle = this.getIntent().getExtras();
+        if(bundle != null){
+            type = bundle.getString("type");
+        }
         toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle(getResources().getString(R.string.news_details));
+        if(type.equals("News")){
+            toolbar.setTitle(getResources().getString(R.string.news_details));
+        }else if(type.equals("Articles")){
+            toolbar.setTitle(getResources().getString(R.string.articles));
+        }
+
         toolbar.setTitleTextColor(Color.WHITE);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

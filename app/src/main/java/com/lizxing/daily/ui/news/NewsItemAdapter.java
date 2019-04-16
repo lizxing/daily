@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.lizxing.daily.R;
+import com.lizxing.daily.common.WebContentActivity;
 import com.lizxing.daily.items.NewsItem;
 
 import java.util.List;
@@ -49,9 +50,10 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
             public void onClick(View v) {
                 int position = holder.getAdapterPosition();
                 NewsItem item = mItemList.get(position);
-                Intent intent = new Intent(mContext, NewsContentActivity.class);
+                Intent intent = new Intent(mContext, WebContentActivity.class);
                 intent.putExtra("title", item.getTitle());
                 intent.putExtra("uri", item.getUri());
+                intent.putExtra("type", "News");
                 mContext.startActivity(intent);
             }
         });

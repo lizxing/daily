@@ -12,9 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.lizxing.daily.R;
 import com.lizxing.daily.items.ArticlesItem;
-import com.lizxing.daily.items.NewsItem;
-import com.lizxing.daily.ui.news.NewsContentActivity;
-import com.lizxing.daily.ui.news.NewsItemAdapter;
+import com.lizxing.daily.common.WebContentActivity;
 
 import java.util.List;
 
@@ -24,7 +22,7 @@ public class ArticlesItemAdapter extends RecyclerView.Adapter<ArticlesItemAdapte
 
     static class ViewHolder extends RecyclerView.ViewHolder{
         TextView ItemTitle;
-        TextView ItemNickname;
+        TextView ItemDescription;
         ImageView ItemPic;
         View ItemView;
 
@@ -33,7 +31,7 @@ public class ArticlesItemAdapter extends RecyclerView.Adapter<ArticlesItemAdapte
             ItemView = view;
             ItemTitle = view.findViewById(R.id.item_title);
             ItemPic = view.findViewById(R.id.item_pic);
-            ItemNickname = view.findViewById(R.id.item_nickname);
+            ItemDescription = view.findViewById(R.id.item_description);
         }
     }
     public ArticlesItemAdapter(List<ArticlesItem> itemList, Context context){
@@ -51,7 +49,11 @@ public class ArticlesItemAdapter extends RecyclerView.Adapter<ArticlesItemAdapte
             public void onClick(View v) {
                 int position = holder.getAdapterPosition();
                 ArticlesItem item = mItemList.get(position);
-
+                Intent intent = new Intent(mContext, WebContentActivity.class);
+                intent.putExtra("title", item.getTitle());
+                intent.putExtra("uri", item.getUri());
+                intent.putExtra("type", "Articles");
+                mContext.startActivity(intent);
             }
         });
         return holder;
@@ -62,7 +64,7 @@ public class ArticlesItemAdapter extends RecyclerView.Adapter<ArticlesItemAdapte
         ArticlesItem item = mItemList.get(position);
         Glide.with(mContext).load(item.getImageUrl()).into(holder.ItemPic);
         holder.ItemTitle.setText(item.getTitle());
-        holder.ItemNickname.setText(item.getNickname());
+        holder.ItemDescription.setText(item.getDescr());
     }
 
     @Override
