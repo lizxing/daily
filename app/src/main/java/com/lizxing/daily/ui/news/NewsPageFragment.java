@@ -58,7 +58,7 @@ public class NewsPageFragment extends DailyFragment {
     public static final String PAGE = "PAGE";
     private int mPage;
     private RecyclerView recyclerView;
-    private NewsItemAdapter newsItemAdapter;
+    private NewsItemAdapter newsItemAdapter = null;
     private List<NewsItem> itemList = new ArrayList<NewsItem>();
     private MyDatabaseHelper databaseHelper;
 
@@ -94,8 +94,12 @@ public class NewsPageFragment extends DailyFragment {
         Log.d(TAG, "initData: 请求数据,页面："+mPage);
         //创建数据库
         databaseHelper = new MyDatabaseHelper(getContext(), "News.db", null, 1);
-        //requestNews();
-        getNews();
+        //获取内容
+        requestNews();
+        //getNews();
+        //适配器
+        newsItemAdapter = new NewsItemAdapter(itemList, getContext());
+        recyclerView.setAdapter(newsItemAdapter);
     }
     
     private void initView(View view){
@@ -108,20 +112,21 @@ public class NewsPageFragment extends DailyFragment {
         //刷新相关
         RefreshLayout refreshLayout = view.findViewById(R.id.refreshLayout);
         refreshLayout.setEnableRefresh(true);//是否启用下拉刷新功能
-        refreshLayout.setEnableLoadMore(false);//是否启用上拉加载功能
+        refreshLayout.setEnableLoadMore(true);//是否启用上拉加载功能
         refreshLayout.setPrimaryColors(getResources().getColor(R.color.colorPrimary));//主题颜色
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                requestNews();
-                getNews();
-                refreshlayout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
+
+                refreshlayout.finishRefresh(3000/*,false*/);//传入false表示刷新失败
             }
         });
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(RefreshLayout refreshlayout) {
-                refreshlayout.finishLoadMore(2000/*,false*/);//传入false表示加载失败
+                requestNews();
+                //getNews();
+                refreshlayout.finishLoadMore(3000/*,false*/);//传入false表示加载失败
             }
         });
     }
@@ -146,7 +151,9 @@ public class NewsPageFragment extends DailyFragment {
 
                 if (code == 200){
                     for (News news:newlist.newsList){
-                        //添加数据到数据库
+                        //删除旧数据
+//                        db.delete("News","type = ?",new String[]{String.valueOf(mPage)});
+                        //添加新数据到数据库
                         values.put("time", news.time);
                         values.put("title", news.title);
                         values.put("description", news.description);
@@ -166,6 +173,7 @@ public class NewsPageFragment extends DailyFragment {
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            getNews();
                             Toast.makeText(getActivity().getApplicationContext(), "返回数据错误",Toast.LENGTH_SHORT).show();
                         }
                     });
@@ -180,6 +188,7 @@ public class NewsPageFragment extends DailyFragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        getNews();
                         Toast.makeText(getActivity().getApplicationContext(), "新闻请求响应失败", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -250,9 +259,9 @@ public class NewsPageFragment extends DailyFragment {
             }while (cursor.moveToNext());
         }
         Log.d(TAG, "setAdapter itemList="+itemList);
-        newsItemAdapter = new NewsItemAdapter(itemList, getContext());
-        recyclerView.setAdapter(newsItemAdapter);
-
+        if(newsItemAdapter != null){
+            newsItemAdapter.notifyDataSetChanged();
+        }
     }
 
 
