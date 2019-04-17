@@ -8,6 +8,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
@@ -34,7 +35,7 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 public class EnglishActivity extends AppCompatActivity {
-
+    private static final String TAG = "===EnglishActivity";
     private Toolbar toolbar;
     private TextView textView;
     private CircularProgressButton finishBtn;

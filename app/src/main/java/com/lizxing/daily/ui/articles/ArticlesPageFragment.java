@@ -37,8 +37,7 @@ import okhttp3.Response;
 
 
 public class ArticlesPageFragment extends Fragment {
-
-    private static final String TAG = "ArticlesPageFragment";
+    private static final String TAG = "===ArticlesPageFragment";
     public static final String PAGE = "PAGE";
     private int mPage;
     private RecyclerView recyclerView;
@@ -81,15 +80,23 @@ public class ArticlesPageFragment extends Fragment {
         //获取内容
         requestArticles();
         //适配器
-        articlesItemAdapter = new ArticlesItemAdapter(itemList, getContext());
+        articlesItemAdapter = new ArticlesItemAdapter(itemList, getContext(), mPage);
         recyclerView.setAdapter(articlesItemAdapter);
     }
 
     private void initView(View view){
         recyclerView = view.findViewById(R.id.recyclerView_articles);
-        //设置列数为2
-        GridLayoutManager layoutManager = new GridLayoutManager(getContext(),2);
-        recyclerView.setLayoutManager(layoutManager);
+        if(mPage == 1){
+            //设置列数为2
+            GridLayoutManager layoutManager = new GridLayoutManager(getContext(),2);
+            recyclerView.setLayoutManager(layoutManager);
+        }else {
+            //设置列数为1
+            GridLayoutManager layoutManager = new GridLayoutManager(getContext(),1);
+            recyclerView.setLayoutManager(layoutManager);
+        }
+
+
 
         //刷新相关
         RefreshLayout refreshLayout = view.findViewById(R.id.refreshLayout);
@@ -132,8 +139,8 @@ public class ArticlesPageFragment extends Fragment {
      * 发起请求获取文章
      */
     private void requestArticles(){
-        String newsAddress = "http://api.tianapi.com/wxnew/?key=6634dbe82d9bddbf27123652cff14e0b&num=20";
-        HttpUtil.sendOkHttpRequest(newsAddress, new Callback() {
+        String articlesAddress = getAddress(mPage);
+        HttpUtil.sendOkHttpRequest(articlesAddress, new Callback() {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 final String responseText = response.body().string();
@@ -155,6 +162,7 @@ public class ArticlesPageFragment extends Fragment {
                         values.put("description", articles.description);
                         values.put("picUrl", articles.picUrl);
                         values.put("url", articles.url);
+                        values.put("type", mPage);
                         db.insert("Articles", null, values);
                         values.clear();
                     }
@@ -191,6 +199,23 @@ public class ArticlesPageFragment extends Fragment {
             }
         });
     }
+
+    /**
+     * 获取请求地址
+     */
+    private String getAddress(int mPage){
+        String address = "";
+        switch(mPage){
+            case 1:
+                address = "http://api.tianapi.com/wxnew/?key=6634dbe82d9bddbf27123652cff14e0b&num=20";
+                break;
+            case 2:
+                address = "http://api.tianapi.com/wxnew/?key=6634dbe82d9bddbf27123652cff14e0b&num=20&src=人民日报";
+                break;
+            default:
+        }
+        return address;
+    }
     /**
      * 查询数据库
      * 获取文章
@@ -200,7 +225,8 @@ public class ArticlesPageFragment extends Fragment {
         int len2 = 0;
         itemList.clear();
         SQLiteDatabase db = databaseHelper.getReadableDatabase();
-        Cursor cursor = db.query("Articles",null,null,null,null,null,null);
+        Cursor cursor = db.rawQuery("select * from Articles where type = ?",new String[]{String.valueOf(mPage)});
+//        Cursor cursor = db.query("Articles",null,null,null,null,null,null);
         if(cursor.moveToFirst()){
             do{
                 String title = cursor.getString(cursor.getColumnIndex("title"));

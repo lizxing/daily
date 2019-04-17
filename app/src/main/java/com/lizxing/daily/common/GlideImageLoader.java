@@ -1,3 +1,8 @@
+
+/**
+ * banner的图片加载器
+ */
+
 package com.lizxing.daily.common;
 
 import android.content.Context;

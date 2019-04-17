@@ -10,7 +10,7 @@ public class ArticlesViewPageAdapter extends ViewPageAdapter {
 
     public ArticlesViewPageAdapter(FragmentManager fm) {
         super(fm);
-        String[] Tabs = {"精选", "收藏"};
+        String[] Tabs = {"公众号精选", "人民日报"};
         setTabs(Tabs);
     }
 

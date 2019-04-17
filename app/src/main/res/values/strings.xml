@@ -34,6 +34,17 @@
     <string name="qlty">质量</string>
     <string name="suggestion">生活建议</string>
     <string name="search">查找</string>
+    <string name="worldNews">国际新闻</string>
+    <string name="homeNews">国内新闻</string>
+    <string name="socialNews">社会新闻</string>
+    <string name="aiNews">人工智能</string>
+    <string name="itNews">IT资讯</string>
+    <string name="vrNews">VR科技</string>
+    <string name="mobileNews">移动互联</string>
+    <string name="anecdoteNews">奇闻</string>
+    <string name="healthyNews">健康新闻</string>
+    <string name="travelNews">旅游新闻</string>
+    <string name="sportNews">体育新闻</string>
 
     <string-array name="languages">
         <item>简体中文</item>

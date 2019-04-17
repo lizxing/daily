@@ -22,7 +22,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             + "title text unique, "
             + "description text, "
             + "picUrl text, "
-            + "url text)";
+            + "url text, "
+            + "type int)";
 
 
     private Context mContext;

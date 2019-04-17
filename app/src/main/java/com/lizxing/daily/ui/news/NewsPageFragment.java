@@ -68,8 +68,8 @@ public class NewsPageFragment extends DailyFragment {
     private MyDatabaseHelper databaseHelper;
     private Banner banner;
     private TextView pageText;
-    private ArrayList<String> list_path;
-    private ArrayList<String> list_title;
+    private ArrayList<String> list_path = new ArrayList<>();
+    private ArrayList<String> list_title = new ArrayList<>();
 
 
     public static NewsPageFragment newInstance(int page) {
@@ -135,7 +135,6 @@ public class NewsPageFragment extends DailyFragment {
         newsItemAdapter = new NewsItemAdapter(itemList, getContext());
         View viewHeader = LayoutInflater.from(getContext()).inflate(R.layout.news_header, recyclerView, false);
         banner = viewHeader.findViewById(R.id.banner);
-        setBanner(); //设置头部轮播
         pageText = viewHeader.findViewById(R.id.page_text);
         setPageText(mPage); //设置轮播下的文字
         newsItemAdapter.addHeaderView(viewHeader);
@@ -272,7 +271,11 @@ public class NewsPageFragment extends DailyFragment {
     private void getNews(){
         int len1 = itemList.size();
         int len2 = 0;
+        int count = 0;
         itemList.clear();
+        list_title.clear();
+        list_path.clear();
+
         SQLiteDatabase db = databaseHelper.getReadableDatabase();
         Cursor cursor = db.rawQuery("select * from News where type = ?",new String[]{String.valueOf(mPage)});
 //        Cursor cursor = db.query("News",null,null,null,null,null,null);
@@ -282,9 +285,21 @@ public class NewsPageFragment extends DailyFragment {
                 String description = cursor.getString(cursor.getColumnIndex("description"));
                 String picUrl = cursor.getString(cursor.getColumnIndex("picUrl"));
                 String url = cursor.getString(cursor.getColumnIndex("url"));
-                NewsItem item = new NewsItem(title, description, picUrl, url);
-                itemList.add(item);
+                count++;
+                if(count < 6){
+                    //banner内容(前5个)
+                    list_title.add(title);
+                    list_path.add(picUrl);
+                }else {
+                    //item内容
+                    NewsItem item = new NewsItem(title, description, picUrl, url);
+                    itemList.add(item);
+
+                }
             }while (cursor.moveToNext());
+        }
+        if(newsItemAdapter != null){
+            newsItemAdapter.notifyDataSetChanged();
         }
         len2 = itemList.size();
         if(len1 == len2){
@@ -292,28 +307,13 @@ public class NewsPageFragment extends DailyFragment {
         }else if(len2 > len1){
             Toast.makeText(getActivity().getApplicationContext(), "已更新"+(len2-len1)+"条数据", Toast.LENGTH_SHORT).show();
         }
-        if(newsItemAdapter != null){
-            newsItemAdapter.notifyDataSetChanged();
-        }
+        setBanner();//设置头部轮播
     }
 
     /**
      * 设置轮播
      */
     private void setBanner(){
-        //放图片地址的集合
-        list_path = new ArrayList<>();
-        //放标题的集合
-        list_title = new ArrayList<>();
-
-        list_path.add("http://ww4.sinaimg.cn/large/006uZZy8jw1faic21363tj30ci08ct96.jpg");
-        list_path.add("http://ww4.sinaimg.cn/large/006uZZy8jw1faic259ohaj30ci08c74r.jpg");
-        list_path.add("http://ww4.sinaimg.cn/large/006uZZy8jw1faic2b16zuj30ci08cwf4.jpg");
-        list_path.add("http://ww4.sinaimg.cn/large/006uZZy8jw1faic2e7vsaj30ci08cglz.jpg");
-        list_title.add("好好学习");
-        list_title.add("天天向上");
-        list_title.add("热爱劳动");
-        list_title.add("不搞对象");
         //设置内置样式，共有六种可以点入方法内逐一体验使用。
         banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);
         //设置图片加载器，图片加载器在下方
@@ -325,7 +325,7 @@ public class NewsPageFragment extends DailyFragment {
         //设置轮播图的标题集合
         banner.setBannerTitles(list_title);
         //设置轮播间隔时间
-        banner.setDelayTime(3000);
+        banner.setDelayTime(5000);
         //设置是否为自动轮播，默认是“是”。
         banner.isAutoPlay(true);
         //设置指示器的位置，小点点，左中右。
@@ -341,39 +341,39 @@ public class NewsPageFragment extends DailyFragment {
      */
     private void setPageText(int mPage){
         switch(mPage){
-//            case NEWS_WORLD:
-//                pageText.setText();
-//                break;
-//            case NEWS_HOME:
-//                pageText.setText();
-//                break;
-//            case NEWS_SOCIAL:
-//                pageText.setText();
-//                break;
-//            case NEWS_AI:
-//                pageText.setText();
-//                break;
-//            case NEWS_IT:
-//                pageText.setText();
-//                break;
-//            case NEWS_VR:
-//                pageText.setText();
-//                break;
-//            case NEWS_MOBILE:
-//                pageText.setText();
-//                break;
-//            case NEWS_ANECDOTE:
-//                pageText.setText();
-//                break;
-//            case NEWS_HEALTH:
-//                pageText.setText();
-//                break;
-//            case NEWS_TRAVEL:
-//                pageText.setText();
-//                break;
-//            case NEWS_SPORT:
-//                pageText.setText();
-//                break;
+            case NEWS_WORLD:
+                pageText.setText(getResources().getString(R.string.worldNews));
+                break;
+            case NEWS_HOME:
+                pageText.setText(getResources().getString(R.string.homeNews));
+                break;
+            case NEWS_SOCIAL:
+                pageText.setText(getResources().getString(R.string.socialNews));
+                break;
+            case NEWS_AI:
+                pageText.setText(getResources().getString(R.string.aiNews));
+                break;
+            case NEWS_IT:
+                pageText.setText(getResources().getString(R.string.itNews));
+                break;
+            case NEWS_VR:
+                pageText.setText(getResources().getString(R.string.vrNews));
+                break;
+            case NEWS_MOBILE:
+                pageText.setText(getResources().getString(R.string.mobileNews));
+                break;
+            case NEWS_ANECDOTE:
+                pageText.setText(getResources().getString(R.string.anecdoteNews));
+                break;
+            case NEWS_HEALTH:
+                pageText.setText(getResources().getString(R.string.healthyNews));
+                break;
+            case NEWS_TRAVEL:
+                pageText.setText(getResources().getString(R.string.travelNews));
+                break;
+            case NEWS_SPORT:
+                pageText.setText(getResources().getString(R.string.sportNews));
+                break;
             default:
         }
     }

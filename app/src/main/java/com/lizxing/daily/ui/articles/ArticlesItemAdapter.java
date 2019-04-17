@@ -19,6 +19,7 @@ import java.util.List;
 public class ArticlesItemAdapter extends RecyclerView.Adapter<ArticlesItemAdapter.ViewHolder>{
     private List<ArticlesItem> mItemList;
     private Context mContext;
+    private int mType = 0;
 
     static class ViewHolder extends RecyclerView.ViewHolder{
         TextView ItemTitle;
@@ -34,14 +35,21 @@ public class ArticlesItemAdapter extends RecyclerView.Adapter<ArticlesItemAdapte
             ItemDescription = view.findViewById(R.id.item_description);
         }
     }
-    public ArticlesItemAdapter(List<ArticlesItem> itemList, Context context){
+    public ArticlesItemAdapter(List<ArticlesItem> itemList, Context context, int type){
         mItemList = itemList;
         mContext = context;
+        mType = type;
     }
 
     @Override
     public ArticlesItemAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.articles_item, parent, false);
+        View view;
+        if(mType == 1){
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.articles_item, parent, false);
+        }else {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.articles_item2, parent, false);
+        }
+
         final ArticlesItemAdapter.ViewHolder holder = new ArticlesItemAdapter.ViewHolder(view);
         //此处写点击监听
         holder.ItemView.setOnClickListener(new View.OnClickListener() {
