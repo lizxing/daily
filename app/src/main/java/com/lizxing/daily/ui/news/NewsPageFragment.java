@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.bartoszlipinski.recyclerviewheader2.RecyclerViewHeader;
 import com.lizxing.daily.R;
 import com.lizxing.daily.common.DailyFragment;
 import com.lizxing.daily.common.GlideImageLoader;
@@ -113,48 +112,11 @@ public class NewsPageFragment extends DailyFragment {
         recyclerView = view.findViewById(R.id.recyclerView_news);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
-        //recyclerViewHeader
-        RecyclerViewHeader header = view.findViewById(R.id.header);
-        header.attachTo(recyclerView);
+
         //轮播
-        banner = view.findViewById(R.id.banner);
-        //放图片地址的集合
-        list_path = new ArrayList<>();
-        //放标题的集合
-        list_title = new ArrayList<>();
+        //banner = view.findViewById(R.id.banner);
+        //setBanner();
 
-        list_path.add("http://ww4.sinaimg.cn/large/006uZZy8jw1faic21363tj30ci08ct96.jpg");
-        list_path.add("http://ww4.sinaimg.cn/large/006uZZy8jw1faic259ohaj30ci08c74r.jpg");
-        list_path.add("http://ww4.sinaimg.cn/large/006uZZy8jw1faic2b16zuj30ci08cwf4.jpg");
-        list_path.add("http://ww4.sinaimg.cn/large/006uZZy8jw1faic2e7vsaj30ci08cglz.jpg");
-        list_title.add("好好学习");
-        list_title.add("天天向上");
-        list_title.add("热爱劳动");
-        list_title.add("不搞对象");
-        //设置内置样式，共有六种可以点入方法内逐一体验使用。
-        banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);
-        //设置图片加载器，图片加载器在下方
-        banner.setImageLoader(new GlideImageLoader());
-        //设置图片网址或地址的集合
-        banner.setImages(list_path);
-        //设置轮播的动画效果，内含多种特效，可点入方法内查找后内逐一体验
-        banner.setBannerAnimation(Transformer.Default);
-        //设置轮播图的标题集合
-        banner.setBannerTitles(list_title);
-        //设置轮播间隔时间
-        banner.setDelayTime(3000);
-        //设置是否为自动轮播，默认是“是”。
-        banner.isAutoPlay(true);
-        //设置指示器的位置，小点点，左中右。
-        banner.setIndicatorGravity(BannerConfig.CENTER)
-                //以上内容都可写成链式布局，这是轮播图的监听。比较重要。方法在下面。
-                .setOnBannerListener(null)
-                //必须最后调用的方法，启动轮播图。
-                .start();
-
-
-        //设置分割线
-        //recyclerView.addItemDecoration(new RecycleViewDivider(getContext(), LinearLayoutManager.VERTICAL, 10, getResources().getColor(R.color.Gainsboro)));
 
         //刷新相关
         RefreshLayout refreshLayout = view.findViewById(R.id.refreshLayout);
@@ -332,6 +294,44 @@ public class NewsPageFragment extends DailyFragment {
         }
     }
 
+    /**
+     * 设置轮播
+     */
+    private void setBanner(){
+//        //放图片地址的集合
+//        list_path = new ArrayList<>();
+//        //放标题的集合
+//        list_title = new ArrayList<>();
+//
+//        list_path.add("http://ww4.sinaimg.cn/large/006uZZy8jw1faic21363tj30ci08ct96.jpg");
+//        list_path.add("http://ww4.sinaimg.cn/large/006uZZy8jw1faic259ohaj30ci08c74r.jpg");
+//        list_path.add("http://ww4.sinaimg.cn/large/006uZZy8jw1faic2b16zuj30ci08cwf4.jpg");
+//        list_path.add("http://ww4.sinaimg.cn/large/006uZZy8jw1faic2e7vsaj30ci08cglz.jpg");
+//        list_title.add("好好学习");
+//        list_title.add("天天向上");
+//        list_title.add("热爱劳动");
+//        list_title.add("不搞对象");
+//        //设置内置样式，共有六种可以点入方法内逐一体验使用。
+//        banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);
+//        //设置图片加载器，图片加载器在下方
+//        banner.setImageLoader(new GlideImageLoader());
+//        //设置图片网址或地址的集合
+//        banner.setImages(list_path);
+//        //设置轮播的动画效果，内含多种特效，可点入方法内查找后内逐一体验
+//        banner.setBannerAnimation(Transformer.Default);
+//        //设置轮播图的标题集合
+//        banner.setBannerTitles(list_title);
+//        //设置轮播间隔时间
+//        banner.setDelayTime(3000);
+//        //设置是否为自动轮播，默认是“是”。
+//        banner.isAutoPlay(true);
+//        //设置指示器的位置，小点点，左中右。
+//        banner.setIndicatorGravity(BannerConfig.CENTER)
+//                //以上内容都可写成链式布局，这是轮播图的监听。比较重要。方法在下面。
+//                .setOnBannerListener(null)
+//                //必须最后调用的方法，启动轮播图。
+//                .start();
+    }
 
     @Override
     public void onDestroyView() {
