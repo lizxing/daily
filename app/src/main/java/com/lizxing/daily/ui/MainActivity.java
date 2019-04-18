@@ -16,8 +16,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.lizxing.daily.R;
 import com.lizxing.daily.database.MyDatabaseHelper;
@@ -29,6 +31,7 @@ import com.lizxing.daily.ui.news.NewsViewPageAdapter;
 import com.lizxing.daily.ui.English.EnglishActivity;
 import com.lizxing.daily.ui.setting.SettingActivity;
 import com.lizxing.daily.ui.weather.WeatherActivity;
+import com.lizxing.daily.utils.StatusBarUtil;
 
 import java.util.List;
 import java.util.Objects;
@@ -157,6 +160,26 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
     };
+
+    // 用来计算返回键的点击间隔时间
+     private long exitTime = 0;
+     @Override
+     public boolean onKeyDown(int keyCode, KeyEvent event) {
+         if (keyCode == KeyEvent.KEYCODE_BACK
+                 && event.getAction() == KeyEvent.ACTION_DOWN) {
+             if ((System.currentTimeMillis() - exitTime) > 2000) {
+                 //弹出提示，可以有多种方式
+                 Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show();
+                 exitTime = System.currentTimeMillis();
+             } else {
+                 finish();
+             }
+             return true;
+         }
+
+         return super.onKeyDown(keyCode, event);
+     }
+
 
 
 }

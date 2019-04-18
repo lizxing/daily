@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory android:title="设置组1">
-        <!--<EditTextPreference-->
-            <!--android:dialogTitle="输入您的名字"-->
-            <!--android:key="name"-->
-            <!--android:singleLine="true"-->
-            <!--android:summary="设置您的姓名"-->
-            <!--android:title="姓名" />-->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
         <ListPreference
             android:entries="@array/languages"
             android:entryValues="@array/languages_value"
@@ -34,8 +28,7 @@
         <Preference
             android:key="clear_cache"
             android:summary="清除本应用缓存"
-            android:title="清楚缓存" />
-    </PreferenceCategory>
+            android:title="清除缓存" />
 
 </PreferenceScreen>
 
