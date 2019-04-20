@@ -2,6 +2,7 @@ package com.lizxing.daily.ui.about;
 
 import android.content.Intent;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -30,6 +31,13 @@ public class AboutActivity extends AppCompatActivity {
     private void intView(){
         nestedScrollView = findViewById(R.id.nestedscrollview);
         toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if(actionBar != null){
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeAsUpIndicator(R.mipmap.ic_back);
+            actionBar.setTitle(getResources().getString(R.string.about));
+        }
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -37,6 +45,7 @@ public class AboutActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
 
         View aboutPage = new AboutPage(this)
                 .isRTL(false)

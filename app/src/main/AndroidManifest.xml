@@ -28,7 +28,11 @@
         <activity android:name=".common.WebContentActivity" />
         <activity android:name=".ui.about.AboutActivity" />
         <activity android:name=".ui.setting.SettingActivity" />
-        <activity android:name=".ui.English.EnglishActivity"></activity>
+        <activity android:name=".ui.English.EnglishActivity" />
+        <activity
+            android:name=".ui.Main2Activity"
+            android:label="@string/title_activity_main2"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

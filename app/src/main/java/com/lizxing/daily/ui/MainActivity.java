@@ -32,6 +32,9 @@ import com.lizxing.daily.ui.English.EnglishActivity;
 import com.lizxing.daily.ui.setting.SettingActivity;
 import com.lizxing.daily.ui.weather.WeatherActivity;
 import com.lizxing.daily.utils.StatusBarUtil;
+import com.luseen.luseenbottomnavigation.BottomNavigation.BottomNavigationItem;
+import com.luseen.luseenbottomnavigation.BottomNavigation.BottomNavigationView;
+import com.luseen.luseenbottomnavigation.BottomNavigation.OnBottomNavigationItemClickListener;
 
 import java.util.List;
 import java.util.Objects;
@@ -41,11 +44,13 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "===MainActivity";
     private Toolbar toolbar;
+    private NavigationView navView;
     private DrawerLayout mDrawerLayout;
     private NewsViewPageAdapter newsViewPageAdapter;
     private ArticlesViewPageAdapter articlesViewPageAdapter;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,9 +63,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void initView(){
         toolbar = findViewById(R.id.toolbar);
+        navView = findViewById(R.id.nav_view);
         mDrawerLayout = findViewById(R.id.drawer_layout);
         tabLayout = findViewById(R.id.tabs);
         viewPager = findViewById(R.id.viewpager);
+        bottomNavigationView =  findViewById(R.id.bottomNavigation);
+
     }
 
     private void initData(){
@@ -74,8 +82,30 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //导航栏
-        NavigationView navView = findViewById(R.id.nav_view);
         navView.setNavigationItemSelectedListener(OnClickNavItem);
+
+        //底部菜单栏
+        BottomNavigationItem bottomNavigationItem = new BottomNavigationItem
+                ("新闻", getResources().getColor(R.color.White), R.mipmap.ic_news);
+        BottomNavigationItem bottomNavigationItem1 = new BottomNavigationItem
+                ("精选", getResources().getColor(R.color.White), R.mipmap.ic_articles);
+        BottomNavigationItem bottomNavigationItem2 = new BottomNavigationItem
+                ("发现", getResources().getColor(R.color.White), R.mipmap.ic_search);
+        BottomNavigationItem bottomNavigationItem3 = new BottomNavigationItem
+                ("关于", getResources().getColor(R.color.White), R.mipmap.ic_about);
+        bottomNavigationView.isColoredBackground(false);
+        bottomNavigationView.setItemActiveColorWithoutColoredBackground(getResources().getColor(R.color.Blue));
+        bottomNavigationView.disableShadow();
+        bottomNavigationView.addTab(bottomNavigationItem);
+        bottomNavigationView.addTab(bottomNavigationItem1);
+        bottomNavigationView.addTab(bottomNavigationItem2);
+        bottomNavigationView.addTab(bottomNavigationItem3);
+        bottomNavigationView.setOnBottomNavigationItemClickListener(new OnBottomNavigationItemClickListener() {
+            @Override
+            public void onNavigationItemClick(int index) {
+                selectItem(index);
+            }
+        });
 
         //适配器
         newsViewPageAdapter = new NewsViewPageAdapter(getSupportFragmentManager());
@@ -127,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.nav_news:
                     if(current instanceof ArticlesPageFragment){
-                        //加载文章页面
+                        //加载新闻页面
                         viewPager.setAdapter(newsViewPageAdapter);
                         tabLayout.setupWithViewPager(viewPager);
                         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
@@ -160,6 +190,19 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
     };
+
+    /**
+     * 处理点击底部菜单栏
+     */
+    private void selectItem(int index){
+        switch (index){
+            case 0:
+                break;
+            default:
+                break;
+        }
+    }
+
 
     // 用来计算返回键的点击间隔时间
      private long exitTime = 0;
