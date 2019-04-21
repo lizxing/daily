@@ -18,11 +18,7 @@
             android:name=".ui.MainActivity"
             android:label="Daliy"
             android:launchMode="singleTask">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".ui.weather.WeatherActivity" />
         <activity android:name=".common.WebContentActivity" />
@@ -31,8 +27,14 @@
         <activity android:name=".ui.English.EnglishActivity" />
         <activity
             android:name=".ui.Main2Activity"
-            android:label="@string/title_activity_main2"
-            android:theme="@style/AppTheme"></activity>
+            android:label="Daliy"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

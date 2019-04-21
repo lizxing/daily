@@ -7,6 +7,12 @@ import android.preference.PreferenceFragment;
 import com.lizxing.daily.R;
 
 public class SettingFragment extends PreferenceFragment {
+
+    public static SettingFragment newInstance() {
+        SettingFragment fragment = new SettingFragment();
+        return fragment;
+    }
+
     @SuppressLint("ResourceType")
     @Override
     public void onCreate(Bundle savedInstanceState) {
