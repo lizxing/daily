@@ -1,9 +1,6 @@
 package com.lizxing.daily.ui.setting;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Intent;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -12,7 +9,6 @@ import android.widget.LinearLayout;
 
 import com.lizxing.daily.R;
 import com.lizxing.daily.ui.MainActivity;
-import com.lizxing.daily.ui.about.AboutActivity;
 
 public class SettingActivity extends AppCompatActivity {
 
