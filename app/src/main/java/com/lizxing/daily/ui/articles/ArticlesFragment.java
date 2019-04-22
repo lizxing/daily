@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.lizxing.daily.R;
 import com.lizxing.daily.common.DailyFragment;
+import com.lizxing.daily.utils.StatusBarUtil;
 
 public class ArticlesFragment extends DailyFragment {
 

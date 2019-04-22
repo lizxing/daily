@@ -1,7 +1,10 @@
 package com.lizxing.daily.ui;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Rect;
 import android.os.Bundle;
+import android.service.notification.StatusBarNotification;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -13,11 +16,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lizxing.daily.R;
@@ -29,6 +34,7 @@ import com.lizxing.daily.ui.articles.ArticlesFragment;
 import com.lizxing.daily.ui.news.NewsFragment;
 import com.lizxing.daily.ui.setting.SettingActivity;
 import com.lizxing.daily.ui.weather.WeatherActivity;
+import com.lizxing.daily.utils.StatusBarUtil;
 import com.luseen.luseenbottomnavigation.BottomNavigation.BottomNavigationItem;
 import com.luseen.luseenbottomnavigation.BottomNavigation.BottomNavigationView;
 import com.luseen.luseenbottomnavigation.BottomNavigation.OnBottomNavigationItemClickListener;
@@ -36,9 +42,13 @@ import com.luseen.luseenbottomnavigation.BottomNavigation.OnBottomNavigationItem
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.net.ssl.SSLEngineResult;
+
 public class Main2Activity extends AppCompatActivity {
 
+    private static final String TAG = "===Main2Activity";
     private Toolbar toolbar;
+    private TextView textView;
     private DrawerLayout mDrawerLayout;
     private NavigationView navView;
     private ActionBar actionBar;
@@ -52,6 +62,7 @@ public class Main2Activity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     private LinearLayout searchLayout;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,12 +73,15 @@ public class Main2Activity extends AppCompatActivity {
         initData();
     }
 
+
+
     private void initView(){
-        toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar_main);
         mDrawerLayout = findViewById(R.id.drawer_layout);
         navView = findViewById(R.id.nav_view);
         bottomNavigationView =  findViewById(R.id.bottomNavigation);
         searchLayout = findViewById(R.id.layout_search);
+        textView = findViewById(R.id.toolbar_title);
     }
 
     private void initData(){
@@ -77,7 +91,8 @@ public class Main2Activity extends AppCompatActivity {
         if(actionBar != null){
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeAsUpIndicator(R.mipmap.ic_menu);
-            actionBar.setTitle(getResources().getString(R.string.news));
+            getSupportActionBar().setDisplayShowTitleEnabled(false);//隐藏默认标题
+            textView.setText(getResources().getString(R.string.news));
         }
 
         //抽屉
@@ -95,6 +110,7 @@ public class Main2Activity extends AppCompatActivity {
         newsFragment = NewsFragment.newInstance();
         fragments.add(newsFragment);
         changeFragment(newsFragment, true);
+//        toolbar.setVisibility(View.GONE);
 
         //底部菜单栏
         BottomNavigationItem bottomNavigationItem = new BottomNavigationItem
@@ -146,8 +162,7 @@ public class Main2Activity extends AppCompatActivity {
             case android.R.id.home:
                 mDrawerLayout.openDrawer(GravityCompat.START);
                 break;
-            case  R.id.search:
-                break;
+
             default:
         }
         return true;
@@ -216,7 +231,11 @@ public class Main2Activity extends AppCompatActivity {
     private void selectItem(int index){
         switch (index){
             case 0:
-                actionBar.setTitle(getResources().getString(R.string.news));
+                textView.setText(getResources().getString(R.string.news));
+                searchLayout.setVisibility(View.VISIBLE);
+//                toolbar.setVisibility(View.GONE);
+//                StatusBarUtil.setStatusBarColor(this,getResources().getColor(R.color.White));
+//                StatusBarUtil.setStatusFontColor(this,true);
                 if (newsFragment == null) {
                     newsFragment = NewsFragment.newInstance();
                     fragments.add(newsFragment);
@@ -224,10 +243,13 @@ public class Main2Activity extends AppCompatActivity {
                 } else {
                     changeFragment(newsFragment, false);
                 }
-                searchLayout.setVisibility(View.VISIBLE);
                 break;
             case 1:
-                actionBar.setTitle(getResources().getString(R.string.articles));
+                textView.setText(getResources().getString(R.string.articles));
+                searchLayout.setVisibility(View.VISIBLE);
+//                toolbar.setVisibility(View.GONE);
+//                StatusBarUtil.setStatusBarColor(this,getResources().getColor(R.color.White));
+//                StatusBarUtil.setStatusFontColor(this,true);
                 if (articlesFragment == null) {
                     articlesFragment = ArticlesFragment.newInstance();
                     fragments.add(articlesFragment);
@@ -235,10 +257,13 @@ public class Main2Activity extends AppCompatActivity {
                 } else {
                     changeFragment(articlesFragment, false);
                 }
-                searchLayout.setVisibility(View.VISIBLE);
                 break;
             case 2:
-                actionBar.setTitle(getResources().getString(R.string.study));
+                textView.setText(getResources().getString(R.string.study));
+                searchLayout.setVisibility(View.GONE);
+//                toolbar.setVisibility(View.VISIBLE);
+//                StatusBarUtil.setStatusBarColor(this,getResources().getColor(R.color.colorPrimary));
+//                StatusBarUtil.setStatusFontColor(this,false);
                 if (studyFragment == null) {
                     studyFragment = EnglishFragment.newInstance();
                     fragments.add(studyFragment);
@@ -246,10 +271,13 @@ public class Main2Activity extends AppCompatActivity {
                 } else {
                     changeFragment(studyFragment, false);
                 }
-                searchLayout.setVisibility(View.GONE);
                 break;
             case 3:
-                actionBar.setTitle(getResources().getString(R.string.about));
+                textView.setText(getResources().getString(R.string.about));
+                searchLayout.setVisibility(View.GONE);
+//                toolbar.setVisibility(View.VISIBLE);
+//                StatusBarUtil.setStatusBarColor(this,getResources().getColor(R.color.colorPrimary));
+//                StatusBarUtil.setStatusFontColor(this,false);
                 if (aboutFragment == null) {
                     aboutFragment = AboutFragment.newInstance();
                     fragments.add(aboutFragment);
@@ -257,7 +285,6 @@ public class Main2Activity extends AppCompatActivity {
                 } else {
                     changeFragment(aboutFragment, false);
                 }
-                searchLayout.setVisibility(View.GONE);
                 break;
             default:
                 break;
@@ -282,4 +309,5 @@ public class Main2Activity extends AppCompatActivity {
 
         return super.onKeyDown(keyCode, event);
     }
+
 }

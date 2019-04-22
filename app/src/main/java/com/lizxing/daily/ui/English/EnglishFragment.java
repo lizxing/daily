@@ -19,6 +19,7 @@ import com.lizxing.daily.R;
 import com.lizxing.daily.gson.English;
 import com.lizxing.daily.gson.EnglishList;
 import com.lizxing.daily.utils.HttpUtil;
+import com.lizxing.daily.utils.StatusBarUtil;
 import com.lizxing.daily.utils.Utility;
 import com.robinhood.ticker.TickerUtils;
 import com.robinhood.ticker.TickerView;

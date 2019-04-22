@@ -2,10 +2,18 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+
+        <!--toolbar-->
+        <item name="colorPrimary">@color/Blue</item>
+
+        <!--状态栏-->
+        <item name="colorPrimaryDark">@color/Blue</item>
+
+
         <item name="colorAccent">@color/Blue</item>
+        <item name="colorControlNormal">@color/White</item>
+
+
 
 
     </style>

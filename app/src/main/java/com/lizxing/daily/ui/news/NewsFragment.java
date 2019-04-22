@@ -9,9 +9,11 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toolbar;
 
 import com.lizxing.daily.R;
 import com.lizxing.daily.common.DailyFragment;
+import com.lizxing.daily.utils.StatusBarUtil;
 
 public class NewsFragment extends DailyFragment {
 

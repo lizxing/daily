@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import com.lizxing.daily.R;
 import com.lizxing.daily.common.DailyFragment;
 import com.lizxing.daily.ui.MainActivity;
+import com.lizxing.daily.utils.StatusBarUtil;
 
 import mehdi.sakout.aboutpage.AboutPage;
 import mehdi.sakout.aboutpage.Element;
@@ -37,7 +38,6 @@ public class AboutFragment extends DailyFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_about, container, false);
-
         frameLayout = view.findViewById(R.id.layout_about);
 
         View aboutPage = new AboutPage(getContext())
