@@ -13,8 +13,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.lizxing.daily.R;
 import com.lizxing.daily.ui.English.EnglishActivity;
@@ -46,6 +50,7 @@ public class Main2Activity extends AppCompatActivity {
     private Fragment studyFragment;
     private Fragment aboutFragment;
     private BottomNavigationView bottomNavigationView;
+    private LinearLayout searchLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +67,7 @@ public class Main2Activity extends AppCompatActivity {
         mDrawerLayout = findViewById(R.id.drawer_layout);
         navView = findViewById(R.id.nav_view);
         bottomNavigationView =  findViewById(R.id.bottomNavigation);
+        searchLayout = findViewById(R.id.layout_search);
     }
 
     private void initData(){
@@ -101,7 +107,7 @@ public class Main2Activity extends AppCompatActivity {
                 ("关于", getResources().getColor(R.color.White), R.mipmap.ic_about);
         bottomNavigationView.isColoredBackground(false);
         bottomNavigationView.setItemActiveColorWithoutColoredBackground(getResources().getColor(R.color.Blue));
-        //bottomNavigationView.disableShadow();
+        bottomNavigationView.disableShadow();
         bottomNavigationView.addTab(bottomNavigationItem);
         bottomNavigationView.addTab(bottomNavigationItem1);
         bottomNavigationView.addTab(bottomNavigationItem2);
@@ -218,6 +224,7 @@ public class Main2Activity extends AppCompatActivity {
                 } else {
                     changeFragment(newsFragment, false);
                 }
+                searchLayout.setVisibility(View.VISIBLE);
                 break;
             case 1:
                 actionBar.setTitle(getResources().getString(R.string.articles));
@@ -228,6 +235,7 @@ public class Main2Activity extends AppCompatActivity {
                 } else {
                     changeFragment(articlesFragment, false);
                 }
+                searchLayout.setVisibility(View.VISIBLE);
                 break;
             case 2:
                 actionBar.setTitle(getResources().getString(R.string.study));
@@ -238,6 +246,7 @@ public class Main2Activity extends AppCompatActivity {
                 } else {
                     changeFragment(studyFragment, false);
                 }
+                searchLayout.setVisibility(View.GONE);
                 break;
             case 3:
                 actionBar.setTitle(getResources().getString(R.string.about));
@@ -248,9 +257,29 @@ public class Main2Activity extends AppCompatActivity {
                 } else {
                     changeFragment(aboutFragment, false);
                 }
+                searchLayout.setVisibility(View.GONE);
                 break;
             default:
                 break;
         }
+    }
+
+    // 用来计算返回键的点击间隔时间
+    private long exitTime = 0;
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK
+                && event.getAction() == KeyEvent.ACTION_DOWN) {
+            if ((System.currentTimeMillis() - exitTime) > 2000) {
+                //弹出提示，可以有多种方式
+                Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show();
+                exitTime = System.currentTimeMillis();
+            } else {
+                finish();
+            }
+            return true;
+        }
+
+        return super.onKeyDown(keyCode, event);
     }
 }

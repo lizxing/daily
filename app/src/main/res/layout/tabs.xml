@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     android:background="@color/White"
     app:tabTextColor="@color/colorPrimary"
-    app:tabSelectedTextColor="@color/Black"
-    app:tabIndicatorColor="@color/colorPrimary"
+    app:tabSelectedTextColor="@color/Blue"
+    app:tabIndicatorColor="@color/Blue"
     app:tabMode="scrollable">
 </android.support.design.widget.TabLayout>

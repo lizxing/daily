@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import com.lizxing.daily.R;
 import com.lizxing.daily.common.DailyFragment;
@@ -36,7 +37,9 @@ public class AboutFragment extends DailyFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_about, container, false);
+
         frameLayout = view.findViewById(R.id.layout_about);
+
         View aboutPage = new AboutPage(getContext())
                 .isRTL(false)
                 .setImage(R.drawable.img_daily_black)//图片
