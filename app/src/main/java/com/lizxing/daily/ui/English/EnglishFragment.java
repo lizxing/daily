@@ -10,16 +10,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dd.CircularProgressButton;
 import com.lizxing.daily.R;
+import com.lizxing.daily.common.DailyFragment;
 import com.lizxing.daily.gson.English;
 import com.lizxing.daily.gson.EnglishList;
 import com.lizxing.daily.utils.HttpUtil;
-import com.lizxing.daily.utils.StatusBarUtil;
 import com.lizxing.daily.utils.Utility;
 import com.robinhood.ticker.TickerUtils;
 import com.robinhood.ticker.TickerView;
@@ -30,7 +29,7 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class EnglishFragment extends Fragment {
+public class EnglishFragment extends DailyFragment {
 
     private TextView textView;
     private CircularProgressButton finishBtn;
@@ -51,7 +50,7 @@ public class EnglishFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_study, container, false);
+        View view = inflater.inflate(R.layout.fragment_english, container, false);
 
         initView(view);
         initData();

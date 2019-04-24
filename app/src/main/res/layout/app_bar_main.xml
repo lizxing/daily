@@ -22,10 +22,11 @@
         android:layout_height="match_parent"
         android:fillViewport="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
-        <include layout="@layout/content_main2" />
+        <include layout="@layout/content_main" />
     </android.support.v4.widget.NestedScrollView>
 
     <LinearLayout
+        android:id="@+id/bottom_main"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_gravity="bottom"

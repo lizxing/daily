@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Daily</string>
     <string name="weather">天气概况</string>
-    <string name="English">每日英语</string>
+    <string name="English">英语</string>
     <string name="Next">继续下一句</string>
     <string name="Finish">学好了</string>
     <string name="Refresh">换一句</string>
@@ -46,6 +46,8 @@
     <string name="healthyNews">健康新闻</string>
     <string name="travelNews">旅游新闻</string>
     <string name="sportNews">体育新闻</string>
+    <string name="history_today">历史的今天</string>
+    <string name="quotes">名言警句</string>
 
     <string-array name="languages">
         <item>简体中文</item>

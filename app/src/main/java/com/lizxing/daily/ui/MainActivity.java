@@ -27,6 +27,7 @@ import com.lizxing.daily.ui.about.AboutFragment;
 import com.lizxing.daily.ui.articles.ArticlesFragment;
 import com.lizxing.daily.ui.news.NewsFragment;
 import com.lizxing.daily.ui.setting.SettingActivity;
+import com.lizxing.daily.ui.study.StudyFragment;
 import com.lizxing.daily.ui.weather.WeatherActivity;
 import com.luseen.luseenbottomnavigation.BottomNavigation.BottomNavigationItem;
 import com.luseen.luseenbottomnavigation.BottomNavigation.BottomNavigationView;
@@ -57,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
+        setContentView(R.layout.activity_main);
 
 
         initView();
@@ -241,7 +242,7 @@ public class MainActivity extends AppCompatActivity {
 //                StatusBarUtil.setStatusBarColor(this,getResources().getColor(R.color.colorPrimary));
 //                StatusBarUtil.setStatusFontColor(this,false);
                 if (studyFragment == null) {
-                    studyFragment = EnglishFragment.newInstance();
+                    studyFragment = StudyFragment.newInstance();
                     fragments.add(studyFragment);
                     changeFragment(studyFragment, true);
                 } else {

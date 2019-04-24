@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:layout_marginBottom="50dp"
     tools:context=".ui.MainActivity"
-    tools:showIn="@layout/app_bar_main2">
+    tools:showIn="@layout/app_bar_main">
 
     <FrameLayout
         android:id="@+id/layout_content"
