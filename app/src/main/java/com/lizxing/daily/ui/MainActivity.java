@@ -29,6 +29,7 @@ import com.lizxing.daily.ui.news.NewsFragment;
 import com.lizxing.daily.ui.setting.SettingActivity;
 import com.lizxing.daily.ui.study.StudyFragment;
 import com.lizxing.daily.ui.weather.WeatherActivity;
+import com.lizxing.daily.utils.StatusBarUtil;
 import com.luseen.luseenbottomnavigation.BottomNavigation.BottomNavigationItem;
 import com.luseen.luseenbottomnavigation.BottomNavigation.BottomNavigationView;
 import com.luseen.luseenbottomnavigation.BottomNavigation.OnBottomNavigationItemClickListener;
@@ -59,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        StatusBarUtil.setStatusFontColor(this,true);
 
         initView();
         initData();

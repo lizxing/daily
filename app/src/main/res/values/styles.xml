@@ -4,14 +4,16 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
 
         <!--toolbar-->
-        <item name="colorPrimary">@color/Blue</item>
+        <item name="colorPrimary">@color/White</item>
 
         <!--状态栏-->
-        <item name="colorPrimaryDark">@color/Blue</item>
+        <item name="colorPrimaryDark">@color/White</item>
 
 
         <item name="colorAccent">@color/Blue</item>
-        <item name="colorControlNormal">@color/White</item>
+
+        <!--toolbar上的图标颜色-->
+        <item name="colorControlNormal">@color/Black</item>
 
 
 

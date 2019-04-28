@@ -12,6 +12,6 @@
     <color name="Black">#000000</color>
     <color name="Blue">#15A0FF</color>
     <color name="English_toolbar">#27BAD4</color>
-    <color name="English_card">#0099CC</color>
+    <color name="English_card">#500099CC</color>
     <color name="TouMing">#00FFFFFF</color>
 </resources>
