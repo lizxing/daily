@@ -7,9 +7,11 @@
     app:cardUseCompatPadding="true"
     android:focusable="true"
     android:clickable="true"
-    android:foreground="?android:attr/selectableItemBackground"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:foreground="?attr/selectableItemBackground"
     app:cardCornerRadius="4dp"
-    app:cardElevation="0dp">
+    app:cardElevation="1dp">
 
     <RelativeLayout
         android:layout_width="match_parent"

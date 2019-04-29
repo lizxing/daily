@@ -3,6 +3,7 @@ package com.lizxing.daily.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -54,13 +55,15 @@ public class MainActivity extends AppCompatActivity {
     private Fragment aboutFragment;
     private BottomNavigationView bottomNavigationView;
     private LinearLayout searchLayout;
+    private MenuItem menuItem;
+    private AppBarLayout.LayoutParams params;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        StatusBarUtil.setStatusFontColor(this,true);
+        StatusBarUtil.setStatusFontColor(this,false);
 
         initView();
         initData();
@@ -73,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         mDrawerLayout = findViewById(R.id.drawer_layout);
         navView = findViewById(R.id.nav_view);
         bottomNavigationView =  findViewById(R.id.bottomNavigation);
-        searchLayout = findViewById(R.id.layout_search);
+        //searchLayout = findViewById(R.id.layout_search);
         textView = findViewById(R.id.toolbar_title);
     }
 
@@ -87,6 +90,12 @@ public class MainActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowTitleEnabled(false);//隐藏默认标题
             textView.setText(getResources().getString(R.string.news));
         }
+
+        //设置toolbar ScrollFlag
+        params = (AppBarLayout.LayoutParams) toolbar.getLayoutParams();
+        params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL
+                | AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS
+                | AppBarLayout.LayoutParams.SCROLL_FLAG_SNAP);
 
         //抽屉
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -143,6 +152,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+        menuItem = menu.findItem(R.id.search);
+        menuItem.setVisible(true);
         return true;
     }
 
@@ -155,7 +166,6 @@ public class MainActivity extends AppCompatActivity {
             case android.R.id.home:
                 mDrawerLayout.openDrawer(GravityCompat.START);
                 break;
-
             default:
         }
         return true;
@@ -210,10 +220,14 @@ public class MainActivity extends AppCompatActivity {
         switch (index){
             case 0:
                 textView.setText(getResources().getString(R.string.news));
-                searchLayout.setVisibility(View.VISIBLE);
+                //searchLayout.setVisibility(View.VISIBLE);
 //                toolbar.setVisibility(View.GONE);
 //                StatusBarUtil.setStatusBarColor(this,getResources().getColor(R.color.White));
 //                StatusBarUtil.setStatusFontColor(this,true);
+                menuItem.setVisible(true);
+                params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL
+                        | AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS
+                        | AppBarLayout.LayoutParams.SCROLL_FLAG_SNAP);
                 if (newsFragment == null) {
                     newsFragment = NewsFragment.newInstance();
                     fragments.add(newsFragment);
@@ -224,10 +238,14 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case 1:
                 textView.setText(getResources().getString(R.string.articles));
-                searchLayout.setVisibility(View.VISIBLE);
+                //searchLayout.setVisibility(View.VISIBLE);
 //                toolbar.setVisibility(View.GONE);
 //                StatusBarUtil.setStatusBarColor(this,getResources().getColor(R.color.White));
 //                StatusBarUtil.setStatusFontColor(this,true);
+                menuItem.setVisible(true);
+                params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL
+                        | AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS
+                        | AppBarLayout.LayoutParams.SCROLL_FLAG_SNAP);
                 if (articlesFragment == null) {
                     articlesFragment = ArticlesFragment.newInstance();
                     fragments.add(articlesFragment);
@@ -238,10 +256,12 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case 2:
                 textView.setText(getResources().getString(R.string.study));
-                searchLayout.setVisibility(View.GONE);
+                //searchLayout.setVisibility(View.GONE);
 //                toolbar.setVisibility(View.VISIBLE);
 //                StatusBarUtil.setStatusBarColor(this,getResources().getColor(R.color.colorPrimary));
 //                StatusBarUtil.setStatusFontColor(this,false);
+                menuItem.setVisible(false);
+                params.setScrollFlags(0);
                 if (studyFragment == null) {
                     studyFragment = StudyFragment.newInstance();
                     fragments.add(studyFragment);
@@ -252,10 +272,14 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case 3:
                 textView.setText(getResources().getString(R.string.about));
-                searchLayout.setVisibility(View.GONE);
+                //searchLayout.setVisibility(View.GONE);
 //                toolbar.setVisibility(View.VISIBLE);
 //                StatusBarUtil.setStatusBarColor(this,getResources().getColor(R.color.colorPrimary));
 //                StatusBarUtil.setStatusFontColor(this,false);
+                menuItem.setVisible(false);
+                params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL
+                        | AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS
+                        | AppBarLayout.LayoutParams.SCROLL_FLAG_SNAP);
                 if (aboutFragment == null) {
                     aboutFragment = AboutFragment.newInstance();
                     fragments.add(aboutFragment);

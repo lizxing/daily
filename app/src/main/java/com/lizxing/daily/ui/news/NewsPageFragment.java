@@ -315,13 +315,13 @@ public class NewsPageFragment extends DailyFragment {
      */
     private void setBanner(){
         //设置内置样式，共有六种可以点入方法内逐一体验使用。
-        banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);
+        banner.setBannerStyle(BannerConfig.NUM_INDICATOR_TITLE);
         //设置图片加载器，图片加载器在下方
         banner.setImageLoader(new GlideImageLoader());
         //设置图片网址或地址的集合
         banner.setImages(list_path);
         //设置轮播的动画效果，内含多种特效，可点入方法内查找后内逐一体验
-        banner.setBannerAnimation(Transformer.Default);
+        banner.setBannerAnimation(Transformer.ZoomOutSlide);
         //设置轮播图的标题集合
         banner.setBannerTitles(list_title);
         //设置轮播间隔时间

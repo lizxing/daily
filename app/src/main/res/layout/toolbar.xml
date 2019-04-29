@@ -4,7 +4,7 @@
     android:id="@+id/toolbar_main"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
-    android:background="@color/White"
+    android:background="@color/SteelBlue"
     app:layout_scrollFlags="scroll|enterAlways|snap"
     android:theme="@style/AppTheme">
     <TextView
@@ -12,6 +12,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:textColor="@color/Black"
+        android:textColor="@color/White"
         android:textSize="18sp" />
 </android.support.v7.widget.Toolbar>
