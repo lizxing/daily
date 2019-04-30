@@ -61,7 +61,7 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
                 @Override
                 public void onClick(View v) {
                     int position = holder.getAdapterPosition();
-                    NewsItem item = mItemList.get(position);
+                    NewsItem item = mItemList.get(position-1);
                     Intent intent = new Intent(mContext, WebContentActivity.class);
                     intent.putExtra("title", item.getTitle());
                     intent.putExtra("uri", item.getUri());

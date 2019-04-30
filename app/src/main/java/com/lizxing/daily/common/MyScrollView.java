@@ -2,6 +2,7 @@
 /**
  * 轮子
  * 自定义ScrollView
+ * 实现布局固定在顶部悬浮
  */
 
 package com.lizxing.daily.common;

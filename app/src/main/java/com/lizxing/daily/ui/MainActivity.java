@@ -86,7 +86,8 @@ public class MainActivity extends AppCompatActivity {
         actionBar = getSupportActionBar();
         if(actionBar != null){
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeAsUpIndicator(R.mipmap.ic_menu);
+//            actionBar.setHomeAsUpIndicator(R.mipmap.ic_menu);
+            actionBar.setHomeAsUpIndicator(R.mipmap.ic_user);
             getSupportActionBar().setDisplayShowTitleEnabled(false);//隐藏默认标题
             textView.setText(getResources().getString(R.string.news));
         }
