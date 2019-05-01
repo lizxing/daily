@@ -17,13 +17,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lizxing.daily.R;
-import com.lizxing.daily.ui.English.EnglishFragment;
 import com.lizxing.daily.ui.about.AboutFragment;
 import com.lizxing.daily.ui.articles.ArticlesFragment;
 import com.lizxing.daily.ui.news.NewsFragment;
@@ -87,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         if(actionBar != null){
             actionBar.setDisplayHomeAsUpEnabled(true);
 //            actionBar.setHomeAsUpIndicator(R.mipmap.ic_menu);
-            actionBar.setHomeAsUpIndicator(R.mipmap.ic_user);
+            actionBar.setHomeAsUpIndicator(R.mipmap.ic_user2);
             getSupportActionBar().setDisplayShowTitleEnabled(false);//隐藏默认标题
             textView.setText(getResources().getString(R.string.news));
         }

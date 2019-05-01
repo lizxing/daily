@@ -1,10 +1,12 @@
-package com.lizxing.daily.ui.English;
+package com.lizxing.daily.ui.study;
 
 import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +14,7 @@ import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.support.v7.widget.Toolbar;
 
 import com.dd.CircularProgressButton;
 import com.lizxing.daily.R;
@@ -36,6 +39,7 @@ public class EnglishFragment extends DailyFragment {
     private TickerView numTtickerView;
     private TickerView gradeTickerView;
     private TickerView expTickerView;
+    private Toolbar toolbar;
 
     public static EnglishFragment newInstance() {
         EnglishFragment fragment = new EnglishFragment();
@@ -58,12 +62,24 @@ public class EnglishFragment extends DailyFragment {
         return view;
     }
 
+    @SuppressLint("NewApi")
     private void initView(View view){
         textView = view.findViewById(R.id.English_text);
         finishBtn = view.findViewById(R.id.btnFinish);
         numTtickerView = view.findViewById(R.id.tickerView_num);
         gradeTickerView = view.findViewById(R.id.tickerView_grade);
         expTickerView = view.findViewById(R.id.tickerView_exp);
+        //标题栏
+        toolbar = view.findViewById(R.id.toolbar_english);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.remove(EnglishFragment.this);
+                fragmentTransaction.commit();
+            }
+        });
     }
 
     private void initData(){

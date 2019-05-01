@@ -5,6 +5,7 @@ import com.lizxing.daily.gson.Articles;
 import com.lizxing.daily.gson.ArticlesList;
 import com.lizxing.daily.gson.English;
 import com.lizxing.daily.gson.EnglishList;
+import com.lizxing.daily.gson.HistoryList;
 import com.lizxing.daily.gson.NewsList;
 import com.lizxing.daily.gson.Weather;
 
@@ -50,6 +51,14 @@ public class Utility {
      */
     public static ArticlesList handleArticlesResponse(final String requestText){
         return new Gson().fromJson(requestText, ArticlesList.class);
+    }
+
+    /**
+     * 历史相关
+     * 将返回的JSON解析
+     */
+    public static HistoryList handleHistoryResponse(final String requestText){
+        return new Gson().fromJson(requestText, HistoryList.class);
     }
 
 }

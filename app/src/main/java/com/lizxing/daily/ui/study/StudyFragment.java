@@ -1,24 +1,20 @@
 package com.lizxing.daily.ui.study;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.Toolbar;
 
 import com.lizxing.daily.R;
 import com.lizxing.daily.common.DailyFragment;
-import com.lizxing.daily.ui.English.EnglishFragment;
 
 public class StudyFragment extends DailyFragment {
 
     private LinearLayout layoutEnglish;
+    private LinearLayout layoutHistory;
 
     public static StudyFragment newInstance() {
         StudyFragment fragment = new StudyFragment();
@@ -42,7 +38,9 @@ public class StudyFragment extends DailyFragment {
 
     private void initView(View view){
         layoutEnglish = view.findViewById(R.id.layout_english);
+        layoutHistory = view.findViewById(R.id.layout_history);
         layoutEnglish.setOnClickListener(OnEnglish);
+        layoutHistory.setOnClickListener(OnHistory);
     }
 
     /**
@@ -52,6 +50,16 @@ public class StudyFragment extends DailyFragment {
         @Override
         public void onClick(View v) {
             showFragment(EnglishFragment.newInstance());
+        }
+    };
+
+    /**
+     * 点击历史栏
+     */
+    private View.OnClickListener OnHistory = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            showFragment(HistoryFragment.newInstance());
         }
     };
 
