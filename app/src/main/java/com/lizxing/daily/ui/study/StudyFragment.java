@@ -15,6 +15,8 @@ public class StudyFragment extends DailyFragment {
 
     private LinearLayout layoutEnglish;
     private LinearLayout layoutHistory;
+    private LinearLayout layoutQuotes;
+    private LinearLayout layoutPoems;
 
     public static StudyFragment newInstance() {
         StudyFragment fragment = new StudyFragment();
@@ -39,8 +41,12 @@ public class StudyFragment extends DailyFragment {
     private void initView(View view){
         layoutEnglish = view.findViewById(R.id.layout_english);
         layoutHistory = view.findViewById(R.id.layout_history);
+        layoutQuotes = view.findViewById(R.id.layout_quotes);
+        layoutPoems = view.findViewById(R.id.layout_poems);
         layoutEnglish.setOnClickListener(OnEnglish);
         layoutHistory.setOnClickListener(OnHistory);
+        layoutQuotes.setOnClickListener(OnQuotes);
+        layoutPoems.setOnClickListener(OnPoems);
     }
 
     /**
@@ -60,6 +66,26 @@ public class StudyFragment extends DailyFragment {
         @Override
         public void onClick(View v) {
             showFragment(HistoryFragment.newInstance());
+        }
+    };
+
+    /**
+     * 点击名言栏
+     */
+    private View.OnClickListener OnQuotes = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            showFragment(QuotesFragment.newInstance());
+        }
+    };
+
+    /**
+     * 点击诗词栏
+     */
+    private View.OnClickListener OnPoems = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            showFragment(PoemsFragment.newInstance());
         }
     };
 

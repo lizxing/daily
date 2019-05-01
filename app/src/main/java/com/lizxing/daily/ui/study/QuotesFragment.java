@@ -9,7 +9,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,32 +16,29 @@ import android.widget.Toast;
 
 import com.lizxing.daily.R;
 import com.lizxing.daily.common.DailyFragment;
-import com.lizxing.daily.gson.History;
-import com.lizxing.daily.gson.HistoryList;
-import com.lizxing.daily.items.HistoryItem;
+import com.lizxing.daily.gson.Quotes;
+import com.lizxing.daily.gson.QuotesList;
+import com.lizxing.daily.items.QuotesItem;
 import com.lizxing.daily.utils.HttpUtil;
 import com.lizxing.daily.utils.Utility;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
+public class QuotesFragment extends DailyFragment {
 
-public class HistoryFragment extends DailyFragment {
-
-    private static final String TAG = "===HistoryFragment";
     private Toolbar toolbar;
-    private HistoryItemAdapter historyItemAdapter;
+    private QuotesItemAdapter quotesItemAdapter;
     private RecyclerView recyclerView;
-    private List<HistoryItem> itemList = new ArrayList<HistoryItem>();
+    private List<QuotesItem> itemList = new ArrayList<QuotesItem>();
 
-    public static HistoryFragment newInstance() {
-        HistoryFragment fragment = new HistoryFragment();
+    public static QuotesFragment newInstance() {
+        QuotesFragment fragment = new QuotesFragment();
         return fragment;
     }
 
@@ -54,7 +50,7 @@ public class HistoryFragment extends DailyFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_history, container, false);
+        View view = inflater.inflate(R.layout.fragment_quotes, container, false);
 
         initView(view);
         initData();
@@ -62,44 +58,44 @@ public class HistoryFragment extends DailyFragment {
     }
 
     private void initView(View view){
-        recyclerView = view.findViewById(R.id.recyclerView_history);
+        recyclerView = view.findViewById(R.id.recyclerView_quotes);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
         //标题栏
-        toolbar = view.findViewById(R.id.toolbar_history);
+        toolbar = view.findViewById(R.id.toolbar_quotes);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.remove(HistoryFragment.this);
+                fragmentTransaction.remove(QuotesFragment.this);
                 fragmentTransaction.commit();
             }
         });
     }
 
     private void initData(){
-        requestHistory();
+        requestQuotes();
     }
 
     /**
      * 发起请求获取历史
      */
-    private void requestHistory(){
-        String historyAddress = getAddress();
-        HttpUtil.sendOkHttpRequest(historyAddress, new Callback() {
+    private void requestQuotes(){
+        String quotesAddress = getAddress();
+        HttpUtil.sendOkHttpRequest(quotesAddress, new Callback() {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 final String responseText = response.body().string();
                 //获取到的数据
-                final HistoryList historyList = Utility.handleHistoryResponse(responseText);
-                final int code = historyList.code;
-                final String msg = historyList.msg;
+                final QuotesList quotesList = Utility.handleQuotesResponse(responseText);
+                final int code = quotesList.code;
+                final String msg = quotesList.msg;
 
 
                 if (code == 200){
-                    for (History history:historyList.historyList){
-                        HistoryItem item = new HistoryItem(history.title,history.date);
+                    for (Quotes quotes:quotesList.quotesList){
+                        QuotesItem item = new QuotesItem(quotes.content,quotes.author);
                         itemList.add(item);
                     }
 
@@ -107,9 +103,9 @@ public class HistoryFragment extends DailyFragment {
                         @Override
                         public void run() {
                             //适配器
-                            historyItemAdapter = new HistoryItemAdapter(itemList, getContext());
-                            recyclerView.setAdapter(historyItemAdapter);
-                            historyItemAdapter.notifyDataSetChanged();
+                            quotesItemAdapter = new QuotesItemAdapter(itemList, getContext());
+                            recyclerView.setAdapter(quotesItemAdapter);
+                            quotesItemAdapter.notifyDataSetChanged();
                         };
                     });
                 }else{
@@ -131,7 +127,7 @@ public class HistoryFragment extends DailyFragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(getActivity().getApplicationContext(), "历史请求响应失败", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity().getApplicationContext(), "名言请求响应失败", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -142,13 +138,7 @@ public class HistoryFragment extends DailyFragment {
      * 获取请求地址
      */
     private String getAddress(){
-        Calendar c = Calendar.getInstance();
-        int month = c.get(Calendar.MONTH)+1;
-        int day = c.get(Calendar.DAY_OF_MONTH);
-        String m = month<10?"0"+month : ""+month;
-        String d = day<10?"0"+day : ""+day;
-        String address = "http://api.tianapi.com/txapi/lishi/?key=6634dbe82d9bddbf27123652cff14e0b&date="+m+d;
-        Log.d(TAG,address);
+        String address = "http://api.tianapi.com/txapi/dictum/?key=6634dbe82d9bddbf27123652cff14e0b&num=10";
         return address;
     }
 }

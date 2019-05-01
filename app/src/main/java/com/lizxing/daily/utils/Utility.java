@@ -7,6 +7,8 @@ import com.lizxing.daily.gson.English;
 import com.lizxing.daily.gson.EnglishList;
 import com.lizxing.daily.gson.HistoryList;
 import com.lizxing.daily.gson.NewsList;
+import com.lizxing.daily.gson.PoemsList;
+import com.lizxing.daily.gson.QuotesList;
 import com.lizxing.daily.gson.Weather;
 
 import org.json.JSONArray;
@@ -61,6 +63,21 @@ public class Utility {
         return new Gson().fromJson(requestText, HistoryList.class);
     }
 
+    /**
+     * 名言相关
+     * 将返回的JSON解析
+     */
+    public static QuotesList handleQuotesResponse(final String requestText){
+        return new Gson().fromJson(requestText, QuotesList.class);
+    }
+
+    /**
+     * 诗词相关
+     * 将返回的JSON解析
+     */
+    public static PoemsList handlePoemsResponse(final String requestText){
+        return new Gson().fromJson(requestText, PoemsList.class);
+    }
 }
 
 

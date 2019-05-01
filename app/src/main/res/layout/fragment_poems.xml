@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/img_english_bg"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_poems"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:navigationIcon="@mipmap/ic_back"
+        app:title="@string/poems"/>
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:layout_gravity="center">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:orientation="vertical"
+                app:cardBackgroundColor="@color/English_card"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="14dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/poem_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:layout_gravity="center"
+                        android:text="逢入京使"
+                        android:textSize="20sp"
+                        android:textColor="@color/White"/>
+                    <TextView
+                        android:id="@+id/poem_author"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:layout_gravity="center"
+                        android:text="岑参"
+                        android:textSize="12sp"
+                        android:textColor="@color/White"/>
+                    <TextView
+                        android:id="@+id/poem_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="15dp"
+                        android:layout_gravity="center"
+                        android:text="故园东望路漫漫，双袖龙钟泪不干。马上相逢无纸笔，凭君传语报平安。"
+                        android:textSize="16sp"
+                        android:textColor="@color/White"/>
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="20dp"
+                android:orientation="vertical"
+                app:cardBackgroundColor="@color/English_card"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="14dp">
+
+                <TextView
+                    android:id="@+id/poem_intro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:padding="15dp"
+                    android:text="【注解】：１、故园：指长安，作者在长安有别墅。２、龙钟：这里是沾湿的意思。３、凭：托。【韵译】：回头东望故园千里，路途遥远迷漫；满面龙钟两袖淋漓，涕泪依然不干。途中与君马上邂逅，修书却无纸笔；唯有托你捎个口信，回家报个平安。【评析】：诗写游客邂逅京使，托他捎带口信回家的情境。诗来自生活，反映生活，信手写去，不事雕琢，亲切不味，真挚感人。“马上相逢无纸笔，凭君传语报平安”是生活中常见之事，一经艺术提炼概括，多么典雅感人，富有生气！ "
+                    android:textColor="@color/White"
+                    android:textSize="16sp" />
+
+            </android.support.v7.widget.CardView>
+
+
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+
+
+</LinearLayout>
